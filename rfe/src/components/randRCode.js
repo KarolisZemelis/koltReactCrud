@@ -1,9 +1,9 @@
 export default function generateRandomCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let code = '';
+    const charactersLength = characters.length;
     for (let i = 0; i < 8; i++) {
-        const randomNumber = Math.floor(Math.random() * 10); // Generates 0-9
-        code += randomNumber;
+        code += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
     return code;
 }

@@ -10,18 +10,21 @@ export default function List({ scooters }) {
       <ul className="list-group list-group-flush">
         {scooters.map((scooter) => (
           <li className="list-group-item" key={scooter.id}>
-            <div className="registrationCode">
+            <div className="card-header registrationCode">
               <p>Registracijos kodas:</p>
               <div>{scooter.registrationCode}</div>
             </div>
-            <div className="isBusy">
-              <p>Užimtumas:</p>
-              <div
-                className="availability"
-                style={{
-                  backgroundColor: scooter.isBusy === 1 ? "#d30707" : "#3fca15",
-                }}
-              ></div>
+            <div className="scooterDetails">
+              <div className="isBusy">
+                <p>Užimtumas:</p>
+                <div
+                  className="availability"
+                  style={{
+                    backgroundColor:
+                      scooter.isBusy === 1 ? "#d30707" : "#3fca15",
+                  }}
+                ></div>
+              </div>
               <div className="lastUseTime">
                 <p>Paskutinį kartą naudotas:</p>
                 <div>
@@ -36,10 +39,10 @@ export default function List({ scooters }) {
                   <b>{scooter.totalRideKilometres} km</b>
                 </div>
               </div>
-            </div>
-            <div className="btnContainer">
-              <button className="green">Redaguoti</button>
-              <button className="red">Trinti</button>
+              <div className="btnContainer">
+                <button className="green">Redaguoti</button>
+                <button className="red">Trinti</button>
+              </div>
             </div>
           </li>
         ))}

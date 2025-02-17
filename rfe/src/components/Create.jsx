@@ -2,7 +2,7 @@ import "./buttons.scss";
 
 export default function Create({ handleCreate, registrationCode }) {
   return (
-    <div className="col-4 card">
+    <div className="col-4 card h-100">
       <div className="card-header">
         <h5 className="card-title">Sukurti KOLT pasipirtuką</h5>
       </div>

@@ -19,7 +19,7 @@ function App() {
     }
     const newScooter = { ...createScooter, id: id };
     setCreateScooter(newScooter);
-    scooters.push(newScooter);
+    scooters.unshift(newScooter);
     localStorage.setItem("scooters", JSON.stringify(scooters));
     setRegistrationCode(randRCode());
   };
