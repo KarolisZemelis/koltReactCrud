@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-
-export default function List({ scooters }) {
-  console.log(scooters);
+export default function List({ scooters, handleEdit }) {
   return (
     <div className="card col-7">
       <div className="card-header">
@@ -40,7 +37,12 @@ export default function List({ scooters }) {
                 </div>
               </div>
               <div className="btnContainer">
-                <button className="green">Redaguoti</button>
+                <button
+                  className="green"
+                  onClick={(_) => handleEdit(scooter.id)}
+                >
+                  Redaguoti
+                </button>
                 <button className="red">Trinti</button>
               </div>
             </div>
@@ -48,7 +50,7 @@ export default function List({ scooters }) {
         ))}
       </ul>
       <div className="card-footer">
-        <button className="blue">Galbūt rušiuoti</button>
+        <button className="blue">Kažkada kažkaip rušiuoti</button>
       </div>
     </div>
   );

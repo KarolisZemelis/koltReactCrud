@@ -1,6 +1,7 @@
 import "./app.scss";
 import Create from "./components/Create";
 import List from "./components/List";
+import Edit from "./components/Edit";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
 import { useState, useEffect } from "react";
@@ -9,6 +10,8 @@ function App() {
   const [registrationCode, setRegistrationCode] = useState("");
   const [createScooter, setCreateScooter] = useState(C.defaultScooter);
   const [scooters, setScooters] = useState([]);
+  const [editData, setEditData] = useState(null);
+  const [updateData, setUpdateData] = useState(null);
 
   const handleCreate = () => {
     let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
@@ -23,7 +26,12 @@ function App() {
     localStorage.setItem("scooters", JSON.stringify(scooters));
     setRegistrationCode(randRCode());
   };
+  const handleEdit = (id) => {
+    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
+    let scooterToEdit = scooters.filter((scooter) => scooter.id === id);
 
+    setEditData(scooterToEdit[0]);
+  };
   useEffect(() => {
     setRegistrationCode(randRCode());
   }, []);
@@ -43,7 +51,14 @@ function App() {
   return (
     <div className="App">
       <Create handleCreate={handleCreate} registrationCode={registrationCode} />
-      <List scooters={scooters} />
+      <List scooters={scooters} handleEdit={handleEdit} />
+      {editData !== null && (
+        <Edit
+          editData={editData}
+          setEditData={setEditData}
+          setUpdateData={setUpdateData}
+        />
+      )}
     </div>
   );
 }
