@@ -1,12 +1,49 @@
-import "./App.scss";
+import "./app.scss";
 import Create from "./components/Create";
+import List from "./components/List";
 import * as C from "./components/constants";
+import randRCode from "./components/randRCode";
 import { useState, useEffect } from "react";
 
 function App() {
+  const [registrationCode, setRegistrationCode] = useState("");
+  const [createScooter, setCreateScooter] = useState(C.defaultScooter);
+  const [scooters, setScooters] = useState([]);
+
+  const handleCreate = () => {
+    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
+    let id = scooters.length + 1;
+
+    if (scooters.map((scooter) => scooter.id === id)) {
+      setRegistrationCode(randRCode());
+    }
+    const newScooter = { ...createScooter, id: id };
+    setCreateScooter(newScooter);
+    scooters.push(newScooter);
+    localStorage.setItem("scooters", JSON.stringify(scooters));
+    setRegistrationCode(randRCode());
+  };
+
+  useEffect(() => {
+    setRegistrationCode(randRCode());
+  }, []);
+
+  useEffect(() => {
+    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
+    if (scooters.length < 1) {
+      localStorage.setItem("scooters", JSON.stringify([]));
+    }
+    setScooters(scooters);
+    setCreateScooter((prevScooter) => ({
+      ...prevScooter,
+      registrationCode: registrationCode,
+    }));
+  }, [registrationCode]);
+
   return (
     <div className="App">
-      <Create />
+      <Create handleCreate={handleCreate} registrationCode={registrationCode} />
+      <List scooters={scooters} />
     </div>
   );
 }
