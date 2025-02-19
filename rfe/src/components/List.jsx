@@ -33,7 +33,7 @@ export default function List({ scooters, handleEdit }) {
               <div className="totalRideKilometers">
                 <p>Kilometražas:</p>
                 <div>
-                  <b>{scooter.totalRideKilometres} km</b>
+                  <b>{scooter.totalRideKilometers} km</b>
                 </div>
               </div>
               <div className="btnContainer">

@@ -3,5 +3,5 @@ export const defaultScooter = {
     registrationCode: "",
     isBusy: 0,
     lastUseTime: "",
-    totalRideKilometres: 0.00,
+    totalRideKilometers: 0.00,
 };

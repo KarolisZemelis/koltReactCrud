@@ -31,7 +31,38 @@ function App() {
     let scooterToEdit = scooters.filter((scooter) => scooter.id === id);
 
     setEditData(scooterToEdit[0]);
+    setUpdateData(null);
   };
+
+  const handleSaveUpdate = (id) => {
+    setEditData(null);
+    setScooters((prevScooters) => {
+      const updatedScooters = prevScooters.map((scooter) => {
+        if (scooter.id === id) {
+          return {
+            ...scooter,
+            lastUseTime: updateData.lastUseTime,
+            totalRideKilometers:
+              Number(scooter.totalRideKilometers) +
+              Number(updateData.totalRideKilometers),
+            isBusy:
+              updateData.isBusy !== undefined
+                ? updateData.isBusy
+                : scooter.isBusy,
+          };
+        }
+        return scooter;
+      });
+      return updatedScooters;
+    });
+    setTimeout(() => {
+      setScooters((updatedScooters) => {
+        localStorage.setItem("scooters", JSON.stringify(updatedScooters));
+        return updatedScooters;
+      });
+    }, 100);
+  };
+
   useEffect(() => {
     setRegistrationCode(randRCode());
   }, []);
@@ -56,7 +87,10 @@ function App() {
         <Edit
           editData={editData}
           setEditData={setEditData}
+          updateData={updateData}
           setUpdateData={setUpdateData}
+          scooters={scooters}
+          handleSaveUpdate={handleSaveUpdate}
         />
       )}
     </div>
