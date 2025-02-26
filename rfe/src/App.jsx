@@ -15,6 +15,7 @@ export default function App() {
   const [deleteData, setDeleteData] = useState(null);
   const [sortDirectionKm, setSortDirectionKm] = useState("asc");
   const [sortDirectionDate, setSortDirectionDate] = useState("asc");
+  const [statistics, setStatistics] = useState(C.defaultStatistics);
   const [message, setMessage] = useState([]);
   console.log(scooters);
   const handleRegistrationCode = () => {
@@ -108,7 +109,7 @@ export default function App() {
         });
       }
     } else if (type === "data") {
-      if (sortDirectionKm === "asc") {
+      if (sortDirectionDate === "asc") {
         setScooters((prevScooters) => {
           const sortedScooters = [...prevScooters].sort((a, b) => {
             const dateA = new Date(a.lastUseTime);
@@ -126,7 +127,7 @@ export default function App() {
 
           return sortedScooters;
         });
-      } else if (sortDirectionKm === "desc") {
+      } else if (sortDirectionDate === "desc") {
         setScooters((prevScooters) => {
           const sortedScooters = [...prevScooters].sort((a, b) => {
             const dateA = new Date(a.lastUseTime);
@@ -165,6 +166,11 @@ export default function App() {
     if (isInitialized.current) {
       localStorage.setItem("scooters", JSON.stringify(scooters));
     }
+    let totalRideKilometers = scooters.reduce(
+      (accumulator, currentScooter) =>
+        accumulator + Number(currentScooter.totalRideKilometers),
+      0
+    );
   }, [scooters]);
 
   return (
