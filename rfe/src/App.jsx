@@ -31,9 +31,16 @@ export default function App() {
     setRegistrationCode("");
   };
 
+  const handleEdit = (id) => {};
+
   useEffect(() => {
     const storedScooters = JSON.parse(localStorage.getItem("scooters"));
-    setScooters(storedScooters);
+    if (storedScooters) {
+      setScooters(storedScooters);
+    } else {
+      localStorage.setItem("scooters", JSON.stringify([]));
+    }
+
     isInitialized.current = true;
   }, []);
 
@@ -50,6 +57,7 @@ export default function App() {
         registrationCode={registrationCode}
         handleCreate={handleCreate}
       />
+      <List scooters={scooters} />
     </div>
   );
 }
