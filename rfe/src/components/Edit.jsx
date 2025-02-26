@@ -82,32 +82,46 @@ export default function Edit({
                 <span> km</span>
               </div>
               <div className="mb-3">
-                <label className="form-label">Paskutinė panaudojimo data</label>
-                <input
-                  type="date"
-                  name="lastUseTime"
-                  onChange={(e) =>
-                    setEditData((prevData) => ({
-                      ...prevData,
-                      lastUseTime: e.target.value,
-                    }))
-                  }
-                  required={editData.totalRideKilometers > 0}
-                  value={editData.lastUseTime}
-                />
-                <button
-                  className="green"
-                  type="button"
-                  onClick={() => {
-                    const newDate = new Date().toISOString().split("T")[0];
-                    setEditData((prevData) => ({
-                      ...prevData,
-                      lastUseTime: newDate,
-                    }));
-                  }}
-                >
-                  Šiandienos data
-                </button>
+                <div>
+                  Paskutinė naudojimo data:
+                  <b>
+                    {
+                      scooters.filter(
+                        (scooter) =>
+                          scooter.registrationCode === editData.registrationCode
+                      )[0].lastUseTime
+                    }
+                  </b>
+                </div>
+                <div>
+                  {" "}
+                  <label className="form-label">Panaudojimo data: </label>
+                  <input
+                    type="date"
+                    name="lastUseTime"
+                    onChange={(e) =>
+                      setEditData((prevData) => ({
+                        ...prevData,
+                        lastUseTime: e.target.value,
+                      }))
+                    }
+                    required={editData.totalRideKilometers > 0}
+                    value={editData.lastUseTime}
+                  />
+                  <button
+                    className="green"
+                    type="button"
+                    onClick={() => {
+                      const newDate = new Date().toISOString().split("T")[0];
+                      setEditData((prevData) => ({
+                        ...prevData,
+                        lastUseTime: newDate,
+                      }));
+                    }}
+                  >
+                    Šiandienos data
+                  </button>
+                </div>
               </div>
             </div>
             <div className="modal-footer">

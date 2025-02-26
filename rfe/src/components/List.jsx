@@ -1,4 +1,9 @@
-export default function List({ scooters, handleEdit, handleDeleteMessage }) {
+export default function List({
+  scooters,
+  handleEdit,
+  handleDeleteMessage,
+  handleSort,
+}) {
   return (
     <div className="card col-7">
       <div className="card-header">
@@ -59,7 +64,17 @@ export default function List({ scooters, handleEdit, handleDeleteMessage }) {
         )}
       </ul>
       <div className="card-footer">
-        <button className="blue">Kažkada kažkaip rušiuoti</button>
+        <div>
+          <div>
+            <p>Rūšiuoti pagal:</p>
+          </div>
+          <button className="blue" onClick={(_) => handleSort("km")}>
+            KM
+          </button>
+          <button className="blue" onClick={(_) => handleSort("data")}>
+            Paskutinę naudojimo datą
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -13,8 +13,10 @@ export default function App() {
   const [registrationCode, setRegistrationCode] = useState("");
   const [editData, setEditData] = useState(null);
   const [deleteData, setDeleteData] = useState(null);
+  const [sortDirectionKm, setSortDirectionKm] = useState("asc");
+  const [sortDirectionDate, setSortDirectionDate] = useState("asc");
   const [message, setMessage] = useState([]);
-
+  console.log(scooters);
   const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
   };
@@ -83,10 +85,76 @@ export default function App() {
     setDeleteData(null);
   };
 
+  const handleSort = (type) => {
+    setSortDirectionKm((prevState) => (prevState === "asc" ? "desc" : "asc"));
+    if (type === "km") {
+      if (sortDirectionKm === "asc") {
+        setScooters((prevScooters) => {
+          const sortedScooters = [...prevScooters].sort(
+            (a, b) =>
+              Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
+          );
+          setSortDirectionKm("desc");
+          return sortedScooters;
+        });
+      } else if (sortDirectionKm === "desc") {
+        setScooters((prevScooters) => {
+          const sortedScooters = [...prevScooters].sort(
+            (a, b) =>
+              Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
+          );
+          setSortDirectionKm("asc");
+          return sortedScooters;
+        });
+      }
+    } else if (type === "data") {
+      if (sortDirectionKm === "asc") {
+        setScooters((prevScooters) => {
+          const sortedScooters = [...prevScooters].sort((a, b) => {
+            const dateA = new Date(a.lastUseTime);
+            const dateB = new Date(b.lastUseTime);
+
+            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+              return 0;
+            }
+            return dateA.getTime() - dateB.getTime();
+          });
+
+          setSortDirectionDate((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
+
+          return sortedScooters;
+        });
+      } else if (sortDirectionKm === "desc") {
+        setScooters((prevScooters) => {
+          const sortedScooters = [...prevScooters].sort((a, b) => {
+            const dateA = new Date(a.lastUseTime);
+            const dateB = new Date(b.lastUseTime);
+
+            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+              return 0;
+            }
+            return dateB.getTime() - dateA.getTime();
+          });
+
+          setSortDirectionDate((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
+
+          return sortedScooters;
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const storedScooters = JSON.parse(localStorage.getItem("scooters"));
     if (storedScooters) {
-      setScooters(storedScooters);
+      const sortedScooters = [...storedScooters].sort(
+        (a, b) => Number(b.id) - Number(a.id)
+      );
+      setScooters(sortedScooters);
     } else {
       localStorage.setItem("scooters", JSON.stringify([]));
     }
@@ -111,6 +179,7 @@ export default function App() {
         handleEdit={handleEdit}
         handleDeleteMessage={handleDeleteMessage}
         handleDelete={handleDelete}
+        handleSort={handleSort}
       />
       {editData !== null ? (
         <Edit
