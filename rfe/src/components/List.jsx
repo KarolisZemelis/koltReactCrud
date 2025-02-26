@@ -1,4 +1,4 @@
-export default function List({ scooters, handleEdit }) {
+export default function List({ scooters, handleEdit, handleDeleteMessage }) {
   return (
     <div className="card col-7">
       <div className="card-header">
@@ -46,7 +46,12 @@ export default function List({ scooters, handleEdit }) {
                   >
                     Redaguoti
                   </button>
-                  <button className="red">Trinti</button>
+                  <button
+                    className="red"
+                    onClick={(_) => handleDeleteMessage(scooter.id)}
+                  >
+                    Trinti
+                  </button>
                 </div>
               </div>
             </li>

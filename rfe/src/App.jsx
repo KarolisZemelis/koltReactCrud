@@ -2,6 +2,7 @@ import "./app.scss";
 import Create from "./components/Create";
 import List from "./components/List";
 import Edit from "./components/Edit";
+import Delete from "./components/Delete";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
 import { useState, useEffect, useRef } from "react";
@@ -12,6 +13,7 @@ export default function App() {
   const [registrationCode, setRegistrationCode] = useState("");
   const [editData, setEditData] = useState(null);
   const [deleteData, setDeleteData] = useState(null);
+  const [message, setMessage] = useState([]);
 
   const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
@@ -61,7 +63,25 @@ export default function App() {
     setEditData(null);
   };
 
-  const handleDelete = () => {};
+  const handleDeleteMessage = (id) => {
+    let scooterToDelete = scooters.find((scooter) => scooter.id === id);
+    if (scooterToDelete.isBusy === 0) {
+      setDeleteData(scooterToDelete);
+    } else {
+      setMessage((prevMessage) => ({
+        ...prevMessage,
+        error: "Paspirtukas užimtas negalima ištrinti",
+      }));
+      console.log("error");
+    }
+  };
+
+  const handleDelete = (id) => {
+    setScooters((prevScooters) =>
+      prevScooters.filter((scooter) => scooter.id !== id)
+    );
+    setDeleteData(null);
+  };
 
   useEffect(() => {
     const storedScooters = JSON.parse(localStorage.getItem("scooters"));
@@ -74,7 +94,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (isInitialized.current && scooters.length > 0) {
+    if (isInitialized.current) {
       localStorage.setItem("scooters", JSON.stringify(scooters));
     }
   }, [scooters]);
@@ -86,13 +106,25 @@ export default function App() {
         registrationCode={registrationCode}
         handleCreate={handleCreate}
       />
-      <List scooters={scooters} handleEdit={handleEdit} />
+      <List
+        scooters={scooters}
+        handleEdit={handleEdit}
+        handleDeleteMessage={handleDeleteMessage}
+        handleDelete={handleDelete}
+      />
       {editData !== null ? (
         <Edit
           editData={editData}
           setEditData={setEditData}
           scooters={scooters}
           handleUpdate={handleUpdate}
+        />
+      ) : null}
+      {deleteData !== null ? (
+        <Delete
+          deleteData={deleteData}
+          setDeleteData={setDeleteData}
+          handleDelete={handleDelete}
         />
       ) : null}
     </div>
