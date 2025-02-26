@@ -1,29 +1,16 @@
-import { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 export default function Edit({
   editData,
   setEditData,
-  updateData,
-  setUpdateData,
   scooters,
-  handleSaveUpdate,
+  handleUpdate,
 }) {
-  const [todaysDate, setTodaysDate] = useState("");
   const handleClose = () => {
     setEditData(null);
   };
-  const handleUpdate = (e) => {
-    const { name, type, checked, value } = e.target;
-    setEditData((prevEditData) => ({
-      ...prevEditData,
-      [name]: type === "checkbox" ? (checked ? 1 : 0) : value, // Update editData directly
-    }));
-    setUpdateData((prevUpdateData) => ({
-      ...prevUpdateData,
-      [name]: type === "checkbox" ? (checked ? 1 : 0) : value, // Update updateData
-    }));
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleUpdate();
   };
 
   return (
@@ -40,7 +27,7 @@ export default function Edit({
               onClick={handleClose}
             ></button>
           </div>
-          <form action="">
+          <form onSubmit={onSubmit}>
             <div className="modal-body">
               <div className="mb-3">
                 Registracijos kodas: <b>{editData.registrationCode}</b>
@@ -57,8 +44,13 @@ export default function Edit({
                 <input
                   type="checkbox"
                   name="isBusy"
-                  checked={Boolean(editData.isBusy)}
-                  onChange={handleSaveUpdate}
+                  checked={editData.isBusy}
+                  onChange={(_) =>
+                    setEditData((prevData) => ({
+                      ...prevData,
+                      isBusy: prevData.isBusy === 1 ? 0 : 1,
+                    }))
+                  }
                 />
                 <div className="mb-3"></div>
               </div>
@@ -66,13 +58,10 @@ export default function Edit({
                 <label className="form-label">
                   Nuvažiuoti kilometrai:
                   <b>
-                    {" "}
-                    {
-                      scooters.filter(
-                        (scooter) =>
-                          scooter.registrationCode === editData.registrationCode
-                      )[0].totalRideKilometers
-                    }
+                    {scooters.filter(
+                      (scooter) =>
+                        scooter.registrationCode === editData.registrationCode
+                    )[0].totalRideKilometers + editData.totalRideKilometers}
                     km
                   </b>
                 </label>
@@ -82,7 +71,13 @@ export default function Edit({
                 <input
                   type="number"
                   name="totalRideKilometers"
-                  onChange={handleUpdate}
+                  value={editData.totalRideKilometers}
+                  onChange={(e) => {
+                    setEditData((prevData) => ({
+                      ...prevData,
+                      totalRideKilometers: Number(e.target.value),
+                    }));
+                  }}
                 />
                 <span> km</span>
               </div>
@@ -91,23 +86,24 @@ export default function Edit({
                 <input
                   type="date"
                   name="lastUseTime"
-                  onChange={handleUpdate}
-                  required
-                  value={
-                    editData.lastUseTime === ""
-                      ? todaysDate
-                      : editData.lastUseTime
+                  onChange={(e) =>
+                    setEditData((prevData) => ({
+                      ...prevData,
+                      lastUseTime: e.target.value,
+                    }))
                   }
+                  required={editData.totalRideKilometers > 0}
+                  value={editData.lastUseTime}
                 />
                 <button
                   className="green"
                   type="button"
                   onClick={() => {
                     const newDate = new Date().toISOString().split("T")[0];
-                    setTodaysDate(newDate);
-                    handleUpdate({
-                      target: { name: "lastUseTime", value: newDate },
-                    });
+                    setEditData((prevData) => ({
+                      ...prevData,
+                      lastUseTime: newDate,
+                    }));
                   }}
                 >
                   Šiandienos data
@@ -118,11 +114,7 @@ export default function Edit({
               <button type="button" className="red" onClick={handleClose}>
                 Atšaukti
               </button>
-              <button
-                type="button"
-                className="green"
-                onClick={(_) => handleSaveUpdate(editData.id)}
-              >
+              <button type="submit" className="green">
                 Išsaugoti
               </button>
             </div>
