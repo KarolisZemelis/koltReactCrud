@@ -1,4 +1,5 @@
 export default function List({ scooters, handleEdit }) {
+  console.log(scooters);
   return (
     <div className="card col-7">
       <div className="card-header">

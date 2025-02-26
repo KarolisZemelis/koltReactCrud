@@ -4,122 +4,52 @@ import List from "./components/List";
 import Edit from "./components/Edit";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-function App() {
-  const [registrationCode, setRegistrationCode] = useState("");
-  const [createScooter, setCreateScooter] = useState(C.defaultScooter);
+export default function App() {
   const [scooters, setScooters] = useState([]);
-  const [editData, setEditData] = useState(null);
-  const [updateData, setUpdateData] = useState(null);
+  const [registrationCode, setRegistrationCode] = useState("");
+  const isInitialized = useRef(false);
 
-  const handleCreate = () => {
-    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
-    let id = scooters.length + 1;
-
-    if (scooters.map((scooter) => scooter.id === id)) {
-      setRegistrationCode(randRCode());
-    }
-    const newScooter = { ...createScooter, id: id };
-    setCreateScooter(newScooter);
-    scooters.unshift(newScooter);
-    localStorage.setItem("scooters", JSON.stringify(scooters));
+  const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
   };
-  const handleEdit = (id) => {
-    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
-    let scooterToEdit = scooters.filter((scooter) => scooter.id === id);
 
-    setEditData(scooterToEdit[0]);
-    setUpdateData(null);
-  };
-
-  const handleSaveUpdate = (id) => {
-    setEditData(null);
-    setScooters((prevScooters) => {
-      const updatedScooters = prevScooters.map((scooter) => {
-        if (scooter.id === id) {
-          return {
-            ...scooter,
-            lastUseTime: updateData.lastUseTime,
-            totalRideKilometers:
-              Number(scooter.totalRideKilometers) +
-              Number(updateData.totalRideKilometers),
-            isBusy:
-              updateData.isBusy !== undefined
-                ? updateData.isBusy
-                : scooter.isBusy,
-          };
-        }
-        return scooter;
-      });
-      return updatedScooters;
-    });
-    setTimeout(() => {
-      setScooters((updatedScooters) => {
-        localStorage.setItem("scooters", JSON.stringify(updatedScooters));
-        return updatedScooters;
-      });
-    }, 100);
+  const handleCreate = () => {
+    let id = 1;
+    if (scooters.length > 0) {
+      id = Number(scooters[scooters.length - 1].id + 1);
+    }
+    setScooters((prevScooters) => [
+      ...prevScooters,
+      {
+        ...C.defaultScooter,
+        id: id,
+        registrationCode: registrationCode,
+      },
+    ]);
+    setRegistrationCode("");
   };
 
   useEffect(() => {
-    setRegistrationCode(randRCode());
+    const storedScooters = JSON.parse(localStorage.getItem("scooters"));
+    setScooters(storedScooters);
+    isInitialized.current = true;
   }, []);
 
   useEffect(() => {
-    let scooters = JSON.parse(localStorage.getItem("scooters") || "[]");
-    if (scooters.length < 1) {
-      localStorage.setItem("scooters", JSON.stringify([]));
+    if (isInitialized.current && scooters.length > 0) {
+      localStorage.setItem("scooters", JSON.stringify(scooters));
     }
-    setScooters(scooters);
-    setCreateScooter((prevScooter) => ({
-      ...prevScooter,
-      registrationCode: registrationCode,
-    }));
-  }, [registrationCode]);
+  }, [scooters]);
 
   return (
     <div className="App">
-      <Create handleCreate={handleCreate} registrationCode={registrationCode} />
-      <List scooters={scooters} handleEdit={handleEdit} />
-      {editData !== null && (
-        <Edit
-          editData={editData}
-          setEditData={setEditData}
-          updateData={updateData}
-          setUpdateData={setUpdateData}
-          scooters={scooters}
-          handleSaveUpdate={handleSaveUpdate}
-        />
-      )}
+      <Create
+        handleRegistrationCode={handleRegistrationCode}
+        registrationCode={registrationCode}
+        handleCreate={handleCreate}
+      />
     </div>
   );
 }
-
-export default App;
-
-// Sukurkite duomenų struktūrą localStorage pagal schemą:
-// id: int(nuo 1);
-// registrationCode: string(8);
-// isBusy: int(1);
-// lastUseTime: date;
-// totalRideKilometres: float(du skaičiai po kablelio);
-
-// Paspirtukų aprašo viršuje (arba apačioje arba šone)
-// turi būti atvaizduota tuščia forma su
-// naujam paspirtukui įvesti skirtais laukeliais
-//  ir mygtukas “Pridėti” formos vykdymui.
-// Laukeliui isBusy skirto įvedimo,
-// kuriant naują paspirtuką daryti nereikia,
-// nes naujai sukurtas paspirtukas visada turi būti “laisvas”.
-// registrationCode reikšmė turi būti sukuriama rand kodo, o ne įvedinėjama.
-
-// Naudodami React biblioteką sukurkite vieno puslapio aplikaciją (SPA),
-// kurioje vartotojas galėtų atlikti pilną “Kolt” paspirtukų administravimą (CRUD).
-// Kiekvienas paspirtukas turi turėti savo vizualiai atskirtą aprašą (eilutę),
-// kuriame būtų pateikta visa informaciją apie jį. Šalia turi būti mygtukas “Trinti”,
-// kurį paspaudus atitinkamo paspirtuko įrašas būtų pašalinamas iš localStorage.
-// Šalia turi būti mygtukas “Redaguoti”,
-// kurį paspaudus atitinkamo paspirtuko įrašas būtų atvaizduojamas modal lange su galimybe jį redaguoti,
-// o redaguotą įrašą išsaugoti  localStorage.

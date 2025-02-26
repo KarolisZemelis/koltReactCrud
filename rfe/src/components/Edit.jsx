@@ -58,7 +58,7 @@ export default function Edit({
                   type="checkbox"
                   name="isBusy"
                   checked={Boolean(editData.isBusy)}
-                  onChange={handleUpdate}
+                  onChange={handleSaveUpdate}
                 />
                 <div className="mb-3"></div>
               </div>
