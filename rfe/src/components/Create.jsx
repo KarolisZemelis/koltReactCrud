@@ -6,15 +6,15 @@ export default function Create({
   handleCreate,
 }) {
   return (
-    <div className="col-4 card h-100">
+    <div className="col-2 card">
       <div className="card-header">
         <h5 className="card-title">Sukurti KOLT pasipirtuką</h5>
       </div>
       <div className="card-body">
+        <p>Registracijos kodas: {registrationCode}</p>
         <button className="green" onClick={handleRegistrationCode}>
           Generuoti kodą
         </button>
-        <p>Registracijos kodas: {registrationCode}</p>
       </div>
       <div className="card-footer">
         <button

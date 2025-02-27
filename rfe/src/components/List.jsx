@@ -8,6 +8,17 @@ export default function List({
     <div className="card col-7">
       <div className="card-header">
         <h5 className="card-title">KOLT pasipirtukai</h5>
+        <div>
+          <div>
+            <p>Rūšiuoti pagal:</p>
+          </div>
+          <button className="blue" onClick={(_) => handleSort("km")}>
+            KM
+          </button>
+          <button className="blue" onClick={(_) => handleSort("data")}>
+            Paskutinę naudojimo datą
+          </button>
+        </div>
       </div>
       <ul className="list-group list-group-flush">
         {scooters === null || scooters.length < 1 ? (
@@ -63,19 +74,6 @@ export default function List({
           ))
         )}
       </ul>
-      <div className="card-footer">
-        <div>
-          <div>
-            <p>Rūšiuoti pagal:</p>
-          </div>
-          <button className="blue" onClick={(_) => handleSort("km")}>
-            KM
-          </button>
-          <button className="blue" onClick={(_) => handleSort("data")}>
-            Paskutinę naudojimo datą
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Delete from "./components/Delete";
 import Statistics from "./components/Statistics";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
+import heroBackground from "./components/images/hero_background.jpeg";
 import { useState, useEffect, useRef } from "react";
 
 export default function App() {
@@ -188,19 +189,28 @@ export default function App() {
 
   return (
     <div className="App">
-      {scooters.length > 0 && <Statistics statistics={statistics} />}
-      <Create
-        handleRegistrationCode={handleRegistrationCode}
-        registrationCode={registrationCode}
-        handleCreate={handleCreate}
-      />
-      <List
-        scooters={scooters}
-        handleEdit={handleEdit}
-        handleDeleteMessage={handleDeleteMessage}
-        handleDelete={handleDelete}
-        handleSort={handleSort}
-      />
+      <div
+        className="heroContainer"
+        style={{ backgroundImage: `url(${heroBackground})` }}
+      >
+        <Create
+          handleRegistrationCode={handleRegistrationCode}
+          registrationCode={registrationCode}
+          handleCreate={handleCreate}
+        />
+        {scooters.length > 0 && <Statistics statistics={statistics} />}
+      </div>
+
+      <div className="mainContainer">
+        <List
+          scooters={scooters}
+          handleEdit={handleEdit}
+          handleDeleteMessage={handleDeleteMessage}
+          handleDelete={handleDelete}
+          handleSort={handleSort}
+        />
+      </div>
+
       {editData !== null ? (
         <Edit
           editData={editData}
