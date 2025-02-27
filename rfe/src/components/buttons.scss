@@ -1,7 +1,7 @@
-$red: #d30707;
+$red: #b30606;
 $gray: #adbdff;
 $blue: #3185fc;
-$green: #3fca15;
+$green: #36b30f;
 $yellow: #f18f01;
 
 button {
@@ -35,6 +35,7 @@ button {
   vertical-align: top;
   white-space: nowrap;
   margin: 10px;
+  min-width: 100px;
 
   &:hover {
     background-color: darken($gray, 5%);

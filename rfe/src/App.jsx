@@ -12,7 +12,7 @@ import { useState, useEffect, useRef } from "react";
 export default function App() {
   const isInitialized = useRef(false);
   const [scooters, setScooters] = useState([]);
-  const [registrationCode, setRegistrationCode] = useState("");
+  const [registrationCode, setRegistrationCode] = useState("xxxxxxxx");
   const [editData, setEditData] = useState(null);
   const [deleteData, setDeleteData] = useState(null);
   const [sortDirectionKm, setSortDirectionKm] = useState("asc");
@@ -37,7 +37,7 @@ export default function App() {
       },
       ...prevScooters,
     ]);
-    setRegistrationCode("");
+    setRegistrationCode("xxxxxxxx");
   };
 
   const handleEdit = (id) => {

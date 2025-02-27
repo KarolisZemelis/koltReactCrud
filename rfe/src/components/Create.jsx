@@ -6,21 +6,24 @@ export default function Create({
   handleCreate,
 }) {
   return (
-    <div className="col-2 card">
+    <div className="card">
       <div className="card-header">
         <h5 className="card-title">Sukurti KOLT pasipirtuką</h5>
       </div>
       <div className="card-body">
-        <p>Registracijos kodas: {registrationCode}</p>
-        <button className="green" onClick={handleRegistrationCode}>
-          Generuoti kodą
-        </button>
+        <p>
+          Registracijos kodas: <b>{registrationCode}</b>
+        </p>
       </div>
-      <div className="card-footer">
+      <div className="card-footer create-footer">
+        <button className="blue" onClick={handleRegistrationCode}>
+          Generuoti
+        </button>
         <button
-          className="blue"
+          className="green"
+          onClick={handleCreate}
           style={{
-            ...(registrationCode === ""
+            ...(registrationCode === "xxxxxxxx"
               ? {
                   opacity: 0.5,
                   cursor: "not-allowed",
@@ -30,20 +33,10 @@ export default function Create({
                 }
               : {}),
           }}
-          onClick={handleCreate}
         >
-          Pridėti
+          Sukurti
         </button>
       </div>
     </div>
   );
 }
-
-// Paspirtukų aprašo viršuje (arba apačioje arba šone)
-// turi būti atvaizduota tuščia forma su
-// naujam paspirtukui įvesti skirtais laukeliais
-//  ir mygtukas “Pridėti” formos vykdymui.
-// Laukeliui isBusy skirto įvedimo,
-// kuriant naują paspirtuką daryti nereikia,
-// nes naujai sukurtas paspirtukas visada turi būti “laisvas”.
-// registrationCode reikšmė turi būti sukuriama rand kodo, o ne įvedinėjama.

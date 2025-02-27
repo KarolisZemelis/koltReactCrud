@@ -5,7 +5,7 @@ export default function List({
   handleSort,
 }) {
   return (
-    <div className="card col-7">
+    <div className="card col-7 list">
       <div className="card-header">
         <h5 className="card-title">KOLT pasipirtukai</h5>
         <div>
@@ -27,8 +27,10 @@ export default function List({
           scooters.map((scooter) => (
             <li className="list-group-item" key={scooter.id}>
               <div className="card-header registrationCode">
-                <p>Registracijos kodas:</p>
-                <div>{scooter.registrationCode}</div>
+                <p>Registracijos kodas: </p>
+                <div>
+                  <b>{scooter.registrationCode}</b>
+                </div>
               </div>
               <div className="scooterDetails">
                 <div className="isBusy">
