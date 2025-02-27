@@ -3,6 +3,7 @@ import Create from "./components/Create";
 import List from "./components/List";
 import Edit from "./components/Edit";
 import Delete from "./components/Delete";
+import Statistics from "./components/Statistics";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
 import { useState, useEffect, useRef } from "react";
@@ -17,7 +18,7 @@ export default function App() {
   const [sortDirectionDate, setSortDirectionDate] = useState("asc");
   const [statistics, setStatistics] = useState(C.defaultStatistics);
   const [message, setMessage] = useState([]);
-  console.log(scooters);
+
   const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
   };
@@ -87,7 +88,6 @@ export default function App() {
   };
 
   const handleSort = (type) => {
-    setSortDirectionKm((prevState) => (prevState === "asc" ? "desc" : "asc"));
     if (type === "km") {
       if (sortDirectionKm === "asc") {
         setScooters((prevScooters) => {
@@ -95,7 +95,9 @@ export default function App() {
             (a, b) =>
               Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
           );
-          setSortDirectionKm("desc");
+          setSortDirectionDate((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
           return sortedScooters;
         });
       } else if (sortDirectionKm === "desc") {
@@ -104,7 +106,9 @@ export default function App() {
             (a, b) =>
               Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
           );
-          setSortDirectionKm("asc");
+          setSortDirectionDate((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
           return sortedScooters;
         });
       }
@@ -166,15 +170,25 @@ export default function App() {
     if (isInitialized.current) {
       localStorage.setItem("scooters", JSON.stringify(scooters));
     }
+    const freeScooters = scooters.filter((s) => s.isBusy === 0).length;
+    const busyScooters = scooters.filter((s) => s.isBusy === 1).length;
     let totalRideKilometers = scooters.reduce(
       (accumulator, currentScooter) =>
         accumulator + Number(currentScooter.totalRideKilometers),
       0
     );
+    setStatistics((prevStatistics) => ({
+      ...prevStatistics,
+      totalScooters: Number(scooters.length),
+      freeScooters: Number(freeScooters),
+      busyScooters: Number(busyScooters),
+      totalRideKilometers: Number(totalRideKilometers),
+    }));
   }, [scooters]);
 
   return (
     <div className="App">
+      {scooters.length > 0 && <Statistics statistics={statistics} />}
       <Create
         handleRegistrationCode={handleRegistrationCode}
         registrationCode={registrationCode}

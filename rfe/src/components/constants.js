@@ -7,7 +7,7 @@ export const defaultScooter = {
 };
 export const defaultStatistics = {
     totalScooters: 0,
-    totalFreeScooters: 0,
-    totalBusyScooters: 0,
-    totalRidenKilometers: 0
+    freeScooters: 0,
+    busyScooters: 0,
+    totalRideKilometers: 0
 }
