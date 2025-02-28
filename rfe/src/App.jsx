@@ -88,67 +88,112 @@ export default function App() {
     setDeleteData(null);
   };
 
+  // const handleSort = (type) => {
+  //   if (type === "km") {
+  //     if (sortDirectionKm === "asc") {
+  //       setScooters((prevScooters) => {
+  //         const sortedScooters = [...prevScooters].sort(
+  //           (a, b) =>
+  //             Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
+  //         );
+  //         setSortDirectionKm((prevDirection) =>
+  //           prevDirection === "asc" ? "desc" : "asc"
+  //         );
+  //         return sortedScooters;
+  //       });
+  //     } else if (sortDirectionKm === "desc") {
+  //       setScooters((prevScooters) => {
+  //         const sortedScooters = [...prevScooters].sort(
+  //           (a, b) =>
+  //             Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
+  //         );
+  //         setSortDirectionKm((prevDirection) =>
+  //           prevDirection === "asc" ? "desc" : "asc"
+  //         );
+  //         return sortedScooters;
+  //       });
+  //     }
+  //   } else if (type === "data") {
+  //     if (sortDirectionDate === "asc") {
+  //       setScooters((prevScooters) => {
+  //         const sortedScooters = [...prevScooters].sort((a, b) => {
+  //           const dateA = new Date(a.lastUseTime);
+  //           const dateB = new Date(b.lastUseTime);
+
+  //           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+  //             return 0;
+  //           }
+  //           return dateA.getTime() - dateB.getTime();
+  //         });
+
+  //         setSortDirectionDate((prevDirection) =>
+  //           prevDirection === "asc" ? "desc" : "asc"
+  //         );
+
+  //         return sortedScooters;
+  //       });
+  //     } else if (sortDirectionDate === "desc") {
+  //       setScooters((prevScooters) => {
+  //         const sortedScooters = [...prevScooters].sort((a, b) => {
+  //           const dateA = new Date(a.lastUseTime);
+  //           const dateB = new Date(b.lastUseTime);
+
+  //           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+  //             return 0;
+  //           }
+  //           return dateB.getTime() - dateA.getTime();
+  //         });
+
+  //         setSortDirectionDate((prevDirection) =>
+  //           prevDirection === "asc" ? "desc" : "asc"
+  //         );
+
+  //         return sortedScooters;
+  //       });
+  //     }
+  //   }
+  // };
   const handleSort = (type) => {
     if (type === "km") {
       if (sortDirectionKm === "asc") {
         setScooters((prevScooters) => {
-          const sortedScooters = [...prevScooters].sort(
+          setSortDirectionKm((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
+          return prevScooters.toSorted(
             (a, b) =>
               Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
           );
-          setSortDirectionDate((prevDirection) =>
-            prevDirection === "asc" ? "desc" : "asc"
-          );
-          return sortedScooters;
         });
       } else if (sortDirectionKm === "desc") {
         setScooters((prevScooters) => {
-          const sortedScooters = [...prevScooters].sort(
+          setSortDirectionKm((prevDirection) =>
+            prevDirection === "asc" ? "desc" : "asc"
+          );
+          return prevScooters.toSorted(
             (a, b) =>
               Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
           );
-          setSortDirectionDate((prevDirection) =>
-            prevDirection === "asc" ? "desc" : "asc"
-          );
-          return sortedScooters;
         });
       }
     } else if (type === "data") {
       if (sortDirectionDate === "asc") {
         setScooters((prevScooters) => {
-          const sortedScooters = [...prevScooters].sort((a, b) => {
-            const dateA = new Date(a.lastUseTime);
-            const dateB = new Date(b.lastUseTime);
-
-            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-              return 0;
-            }
-            return dateA.getTime() - dateB.getTime();
-          });
-
           setSortDirectionDate((prevDirection) =>
             prevDirection === "asc" ? "desc" : "asc"
           );
-
-          return sortedScooters;
+          return prevScooters.toSorted(
+            (a, b) => Date.parse(a.lastUseTime) - Date.parse(b.lastUseTime)
+          );
         });
       } else if (sortDirectionDate === "desc") {
         setScooters((prevScooters) => {
-          const sortedScooters = [...prevScooters].sort((a, b) => {
-            const dateA = new Date(a.lastUseTime);
-            const dateB = new Date(b.lastUseTime);
-
-            if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-              return 0;
-            }
-            return dateB.getTime() - dateA.getTime();
-          });
-
           setSortDirectionDate((prevDirection) =>
             prevDirection === "asc" ? "desc" : "asc"
           );
-
-          return sortedScooters;
+          return prevScooters.toSorted(
+            (a, b) => Date.parse(b.lastUseTime) - Date.parse(a.lastUseTime)
+          );
         });
       }
     }

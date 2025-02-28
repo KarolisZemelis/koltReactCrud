@@ -46,7 +46,7 @@ export default function List({
                 <div className="lastUseTime">
                   <p>Paskutinį kartą naudotas:</p>
                   <div>
-                    {scooter.lastUseTime !== ""
+                    {scooter.lastUseTime !== 0
                       ? scooter.lastUseTime
                       : "Nenaudotas"}
                   </div>

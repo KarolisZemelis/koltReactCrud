@@ -71,6 +71,7 @@ export default function Edit({
                 <input
                   type="number"
                   name="totalRideKilometers"
+                  min={0}
                   value={editData.totalRideKilometers}
                   onChange={(e) => {
                     setEditData((prevData) => ({
