@@ -12,6 +12,7 @@ export default function Edit({
     e.preventDefault();
     handleUpdate();
   };
+
   const getMinDateThisYear = () => {
     const today = new Date();
     const year = today.getFullYear();

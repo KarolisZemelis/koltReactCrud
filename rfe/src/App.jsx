@@ -5,10 +5,12 @@ import Edit from "./components/Edit";
 import Delete from "./components/Delete";
 import Statistics from "./components/Statistics";
 import TopBanner from "./components/TopBanner";
+import Messages from "./components/Messages";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
 import heroBackground from "./components/images/hero_background.jpeg";
 import { useState, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
   const isInitialized = useRef(false);
@@ -20,7 +22,7 @@ export default function App() {
   const [sortDirectionDate, setSortDirectionDate] = useState("asc");
   const [statistics, setStatistics] = useState(C.defaultStatistics);
   const [topBanner, setTopBanner] = useState(1);
-  const [message, setMessage] = useState([]);
+  const [messages, setMessage] = useState([]);
   let id = useRef(JSON.parse(localStorage.getItem("latestScooterId")));
 
   const handleRegistrationCode = () => {
@@ -36,13 +38,21 @@ export default function App() {
       },
       ...prevScooters,
     ]);
+    setMessage((prevMessages) => [
+      ...prevMessages,
+      {
+        message: "Paspirtukas sukurtas sėkmingai",
+        type: "alert-primary",
+        id: uuidv4(),
+      },
+    ]);
+    console.log(messages);
     id.current = id.current + 1;
     localStorage.setItem("latestScooterId", JSON.stringify(id.current));
     setRegistrationCode("xxxxxxxx");
   };
 
   const handleEdit = (id) => {
-    console.log("test");
     let scooterToEdit = scooters.find((scooter) => scooter.id === id);
     setEditData({
       ...scooterToEdit,
@@ -50,7 +60,7 @@ export default function App() {
       totalRideKilometers: 0.0,
     });
   };
-  console.log(editData);
+
   const handleUpdate = () => {
     setScooters((prevScooters) =>
       prevScooters.map((scooter) =>
@@ -67,6 +77,14 @@ export default function App() {
           : scooter
       )
     );
+    setMessage((prevMessages) => [
+      ...prevMessages,
+      {
+        message: "Paspirtukas pakoreguotas sėkmingai",
+        type: "alert-primary",
+        id: uuidv4(),
+      },
+    ]);
     setEditData(null);
   };
 
@@ -75,11 +93,14 @@ export default function App() {
     if (scooterToDelete.isBusy === 0) {
       setDeleteData(scooterToDelete);
     } else {
-      setMessage((prevMessage) => ({
-        ...prevMessage,
-        error: "Paspirtukas užimtas negalima ištrinti",
-      }));
-      console.log("error");
+      setMessage((prevMessages) => [
+        ...prevMessages,
+        {
+          message: "Paspirtukas užimtas, negalima ištrinti",
+          type: "alert-danger",
+          id: uuidv4(),
+        },
+      ]);
     }
   };
 
@@ -88,6 +109,14 @@ export default function App() {
       prevScooters.filter((scooter) => scooter.id !== id)
     );
     setDeleteData(null);
+    setMessage((prevMessages) => [
+      ...prevMessages,
+      {
+        message: "Paspirtukas ištrintas sėkmingai",
+        type: "alert-primary",
+        id: uuidv4(),
+      },
+    ]);
   };
 
   const handleSort = (type) => {
@@ -211,6 +240,9 @@ export default function App() {
           setDeleteData={setDeleteData}
           handleDelete={handleDelete}
         />
+      ) : null}
+      {messages !== null ? (
+        <Messages messages={messages} setMessage={setMessage} />
       ) : null}
     </div>
   );
