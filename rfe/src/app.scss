@@ -14,7 +14,9 @@ $dark-gray: #4a5568; // Dark Gray
   box-sizing: border-box;
   text-decoration: none;
 }
-
+body {
+  overflow-x: hidden;
+}
 .App {
   font-family: sans-serif;
   display: flex;
@@ -36,7 +38,7 @@ $dark-gray: #4a5568; // Dark Gray
     .btn-close {
       top: -60px;
       right: -95%;
-      border: none;
+      box-shadow: none;
     }
     .logo-container {
       display: flex;
