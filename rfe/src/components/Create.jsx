@@ -6,7 +6,7 @@ export default function Create({
   handleCreate,
 }) {
   return (
-    <div className="card">
+    <div className="card col-2.5 create">
       <div className="card-header">
         <h5 className="card-title">Sukurti KOLT pasipirtuką</h5>
       </div>
@@ -16,7 +16,7 @@ export default function Create({
         </p>
       </div>
       <div className="card-footer create-footer">
-        <button className="blue" onClick={handleRegistrationCode}>
+        <button className="green" onClick={handleRegistrationCode}>
           Generuoti
         </button>
         <button

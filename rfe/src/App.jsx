@@ -19,20 +19,18 @@ export default function App() {
   const [sortDirectionDate, setSortDirectionDate] = useState("asc");
   const [statistics, setStatistics] = useState(C.defaultStatistics);
   const [message, setMessage] = useState([]);
+  let id = useRef(1);
 
   const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
   };
 
   const handleCreate = () => {
-    let id = 1;
-    if (scooters.length > 0) {
-      id = Number(scooters[0].id + 1);
-    }
+    id.current = id.current + 1;
     setScooters((prevScooters) => [
       {
         ...C.defaultScooter,
-        id: id,
+        id: id.current,
         registrationCode: registrationCode,
       },
       ...prevScooters,
@@ -88,93 +86,28 @@ export default function App() {
     setDeleteData(null);
   };
 
-  // const handleSort = (type) => {
-  //   if (type === "km") {
-  //     if (sortDirectionKm === "asc") {
-  //       setScooters((prevScooters) => {
-  //         const sortedScooters = [...prevScooters].sort(
-  //           (a, b) =>
-  //             Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
-  //         );
-  //         setSortDirectionKm((prevDirection) =>
-  //           prevDirection === "asc" ? "desc" : "asc"
-  //         );
-  //         return sortedScooters;
-  //       });
-  //     } else if (sortDirectionKm === "desc") {
-  //       setScooters((prevScooters) => {
-  //         const sortedScooters = [...prevScooters].sort(
-  //           (a, b) =>
-  //             Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
-  //         );
-  //         setSortDirectionKm((prevDirection) =>
-  //           prevDirection === "asc" ? "desc" : "asc"
-  //         );
-  //         return sortedScooters;
-  //       });
-  //     }
-  //   } else if (type === "data") {
-  //     if (sortDirectionDate === "asc") {
-  //       setScooters((prevScooters) => {
-  //         const sortedScooters = [...prevScooters].sort((a, b) => {
-  //           const dateA = new Date(a.lastUseTime);
-  //           const dateB = new Date(b.lastUseTime);
-
-  //           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-  //             return 0;
-  //           }
-  //           return dateA.getTime() - dateB.getTime();
-  //         });
-
-  //         setSortDirectionDate((prevDirection) =>
-  //           prevDirection === "asc" ? "desc" : "asc"
-  //         );
-
-  //         return sortedScooters;
-  //       });
-  //     } else if (sortDirectionDate === "desc") {
-  //       setScooters((prevScooters) => {
-  //         const sortedScooters = [...prevScooters].sort((a, b) => {
-  //           const dateA = new Date(a.lastUseTime);
-  //           const dateB = new Date(b.lastUseTime);
-
-  //           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-  //             return 0;
-  //           }
-  //           return dateB.getTime() - dateA.getTime();
-  //         });
-
-  //         setSortDirectionDate((prevDirection) =>
-  //           prevDirection === "asc" ? "desc" : "asc"
-  //         );
-
-  //         return sortedScooters;
-  //       });
-  //     }
-  //   }
-  // };
   const handleSort = (type) => {
     if (type === "km") {
       if (sortDirectionKm === "asc") {
         setScooters((prevScooters) => {
-          setSortDirectionKm((prevDirection) =>
-            prevDirection === "asc" ? "desc" : "asc"
-          );
-          return prevScooters.toSorted(
+          return [...prevScooters].toSorted(
             (a, b) =>
               Number(a.totalRideKilometers) - Number(b.totalRideKilometers)
           );
         });
+        setSortDirectionKm((prevDirection) =>
+          prevDirection === "asc" ? "desc" : "asc"
+        );
       } else if (sortDirectionKm === "desc") {
         setScooters((prevScooters) => {
-          setSortDirectionKm((prevDirection) =>
-            prevDirection === "asc" ? "desc" : "asc"
-          );
-          return prevScooters.toSorted(
+          return [...prevScooters].toSorted(
             (a, b) =>
               Number(b.totalRideKilometers) - Number(a.totalRideKilometers)
           );
         });
+        setSortDirectionKm((prevDirection) =>
+          prevDirection === "asc" ? "desc" : "asc"
+        );
       }
     } else if (type === "data") {
       if (sortDirectionDate === "asc") {
@@ -182,7 +115,7 @@ export default function App() {
           setSortDirectionDate((prevDirection) =>
             prevDirection === "asc" ? "desc" : "asc"
           );
-          return prevScooters.toSorted(
+          return [...prevScooters].toSorted(
             (a, b) => Date.parse(a.lastUseTime) - Date.parse(b.lastUseTime)
           );
         });
@@ -191,7 +124,7 @@ export default function App() {
           setSortDirectionDate((prevDirection) =>
             prevDirection === "asc" ? "desc" : "asc"
           );
-          return prevScooters.toSorted(
+          return [...prevScooters].toSorted(
             (a, b) => Date.parse(b.lastUseTime) - Date.parse(a.lastUseTime)
           );
         });
@@ -238,15 +171,15 @@ export default function App() {
         className="heroContainer"
         style={{ backgroundImage: `url(${heroBackground})` }}
       >
+        {scooters.length > 0 && <Statistics statistics={statistics} />}
+      </div>
+
+      <div className="mainContainer">
         <Create
           handleRegistrationCode={handleRegistrationCode}
           registrationCode={registrationCode}
           handleCreate={handleCreate}
         />
-        {scooters.length > 0 && <Statistics statistics={statistics} />}
-      </div>
-
-      <div className="mainContainer">
         <List
           scooters={scooters}
           handleEdit={handleEdit}

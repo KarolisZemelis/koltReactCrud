@@ -9,6 +9,7 @@ export default function Statistics({ statistics }) {
     }
 
     const freePercentage = (freeScooters / total) * 100;
+    console.log(freePercentage);
     const busyPercentage = (busyScooters / total) * 100;
 
     const freeAngle = Math.round((freePercentage / 100) * 360);
@@ -53,21 +54,21 @@ export default function Statistics({ statistics }) {
           <linearGradient id="freeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop
               offset="0%"
-              style={{ stopColor: "#3fca15", stopOpacity: 1 }}
+              style={{ stopColor: "#48BB78", stopOpacity: 1 }} // Use $success color
             />
             <stop
               offset="100%"
-              style={{ stopColor: "#298a08", stopOpacity: 1 }}
+              style={{ stopColor: "#38A169", stopOpacity: 1 }} // Darker shade of $success
             />
           </linearGradient>
           <linearGradient id="busyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop
               offset="0%"
-              style={{ stopColor: "#d30707", stopOpacity: 1 }}
+              style={{ stopColor: "#E53E3E", stopOpacity: 1 }} // Use $danger color
             />
             <stop
               offset="100%"
-              style={{ stopColor: "#960505", stopOpacity: 1 }}
+              style={{ stopColor: "#C53030", stopOpacity: 1 }} // Darker shade of $danger
             />
           </linearGradient>
         </defs>
@@ -90,16 +91,8 @@ export default function Statistics({ statistics }) {
           )}
         </g>
         {/* Free Percentage Label and Line */}
-        <line
-          x1={polarToCartesian(0, 0, 100, freeAngle / 2).x}
-          y1={polarToCartesian(0, 0, 100, freeAngle / 2).y}
-          x2={polarToCartesian(0, 0, 120, freeAngle / 2).x}
-          y2={polarToCartesian(0, 0, 120, freeAngle / 2).y}
-          stroke="black"
-          strokeWidth="1"
-        />
         <text
-          {...polarToCartesian(0, 15, 125, freeAngle / 2)}
+          {...polarToCartesian(0, 15, 130, freeAngle / 2)}
           textAnchor="middle"
           fontSize="16"
           fontFamily="Arial"
@@ -109,16 +102,8 @@ export default function Statistics({ statistics }) {
         </text>
 
         {/* Busy Percentage Label and Line */}
-        <line
-          x1={polarToCartesian(0, 0, 100, freeAngle + busyAngle / 2).x}
-          y1={polarToCartesian(0, 0, 100, freeAngle + busyAngle / 2).y}
-          x2={polarToCartesian(0, 0, 120, freeAngle + busyAngle / 2).x}
-          y2={polarToCartesian(0, 0, 120, freeAngle + busyAngle / 2).y}
-          stroke="black"
-          strokeWidth="1"
-        />
         <text
-          {...polarToCartesian(0, -15, 120, freeAngle + busyAngle / 2)}
+          {...polarToCartesian(0, -15, 130, freeAngle + busyAngle / 2)}
           textAnchor="middle"
           fontSize="16"
           fontFamily="Arial"
@@ -151,10 +136,10 @@ export default function Statistics({ statistics }) {
         {PieChart(statistics)}
         <div className="legend">
           <div>
-            Rezervuoti paspirtukai <div className="busy"></div>
+            Rezervuoti <div className="busy"></div>
           </div>
           <div>
-            Laisvi paspirtukai <div className="free"></div>
+            Laisvi <div className="free"></div>
           </div>
         </div>
       </div>

@@ -1,36 +1,50 @@
 @import "~bootstrap/scss/bootstrap";
-$red: #d30707;
-$gray: #adbdff;
-$blue: #3185fc;
-$green: #3fca15;
-$yellow: #f18f01;
+
+$primary: #6366f1; // Indigo/Violet
+$secondary: #a5b4fc; // Light Indigo
+$success: #48bb78; // Softer Green
+$danger: #e53e3e; // Muted Red
+$warning: #f6ad55; // Warm Orange-Yellow
+$light-gray: #f3f4f6; // Light Gray
+$dark-gray: #4a5568; // Dark Gray
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  background-color: $light-gray;
+  display: flex;
+  justify-content: center;
+}
 
 .App {
   display: flex;
   flex-direction: column;
-  font-family: "poppins";
-  background-color: rgba(54, 179, 15, 0.1);
+  font-family: sans-serif;
+  // Use light gray for background
+  width: 1500px;
 
   .heroContainer {
-    width: 100%;
     height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-size: cover;
     background-position: center;
-    position: relative; // For overlay positioning
+    position: relative;
 
     &::before {
-      // Semi-transparent overlay
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.6); // Adjust opacity as needed
-      // z-index: 1; // Place overlay above background image
+      background-color: rgba(255, 255, 255, 0.6);
     }
 
     .statisticContainer {
@@ -38,42 +52,48 @@ $yellow: #f18f01;
       align-items: center;
       justify-content: center;
       padding: 40px;
-      position: relative; // For z-index context
-      z-index: 2; // Place content above overlay
+      position: relative;
+      z-index: 2;
+      gap: 10px;
 
       .pieChart {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 25px;
-        background-color: rgba(221, 218, 218, 0.5);
-
+        justify-content: center;
+        width: 350px;
+        height: 350px;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.05); // Very light gray
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        position: relative;
         svg {
           overflow: visible;
         }
-
         .legend {
-          display: flex;
+          margin-left: 10px;
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
 
           div {
             display: inherit;
             align-items: center;
-            margin-right: 20px;
 
             .free,
             .busy {
               width: 18px;
               height: 18px;
-              border: 1px solid black;
+              border: 1px solid $dark-gray; // Dark Gray border
               margin-left: 5px;
             }
 
             .free {
-              background-color: #36b30f;
+              background-color: $success; // Use success green
             }
 
             .busy {
-              background-color: #b30606;
+              background-color: $danger; // Use danger red
             }
           }
         }
@@ -82,10 +102,15 @@ $yellow: #f18f01;
       .statisticsTable {
         padding: 20px;
         border: 1px solid #ddd;
-        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        width: 350px;
+        height: 350px;
+        background-color: rgba(0, 0, 0, 0.05); // Very light gray
         font-size: 1.1em;
         line-height: 1.6;
-        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         text-align: left;
 
         p {
@@ -104,26 +129,39 @@ $yellow: #f18f01;
 
   .mainContainer {
     display: flex;
-    justify-content: space-around;
+    gap: 30px;
     padding: 20px;
     .list {
-      // Direct children of mainContainer
-      width: 45%;
       padding: 20px;
       border: 1px solid #eee;
-      background-color: #f9f9f9;
+      background-color: white; // Use white for cards
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
+      .list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        h5 {
+          margin-bottom: 0;
+        }
+        .sortContainer {
+          display: inherit;
+          align-items: inherit;
+          p {
+            margin-bottom: 0;
+          }
+        }
+      }
       .list-group-item {
+        padding: 10px;
         .registrationCode {
           display: flex;
-          margin-left: 10px;
         }
         .scooterDetails {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 3px;
+          padding: 10px;
           .isBusy {
             display: flex;
             justify-content: center;
@@ -133,7 +171,7 @@ $yellow: #f18f01;
               width: 20px;
               height: 20px;
               border-radius: 50px;
-              border: 0.5px solid black;
+              border: 0.5px solid $dark-gray; // Dark Gray border
             }
           }
           .lastUseTime {
@@ -154,10 +192,23 @@ $yellow: #f18f01;
         }
       }
     }
+    .create {
+      max-height: 220px;
+    }
   }
 
   .modal {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
   }
+}
+
+.card-header,
+.card-footer {
+  background-color: rgba(0, 0, 0, 0.05); // Very light gray
+}
+
+h5 {
+  font-size: 22px;
+  font-weight: 600;
 }

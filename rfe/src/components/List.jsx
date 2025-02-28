@@ -5,19 +5,19 @@ export default function List({
   handleSort,
 }) {
   return (
-    <div className="card col-7 list">
-      <div className="card-header">
+    <div className="card col-8 list">
+      <div className="card-header list-header">
         <h5 className="card-title">KOLT pasipirtukai</h5>
-        <div>
-          <div>
-            <p>Rūšiuoti pagal:</p>
+        <div className="sortContainer">
+          <p>Rūšiuoti pagal:</p>
+          <div className="sortBtnContainer">
+            <button className="green" onClick={(_) => handleSort("km")}>
+              Kilometrai
+            </button>
+            <button className="green" onClick={(_) => handleSort("data")}>
+              Paskutinę naudojimo datą
+            </button>
           </div>
-          <button className="blue" onClick={(_) => handleSort("km")}>
-            KM
-          </button>
-          <button className="blue" onClick={(_) => handleSort("data")}>
-            Paskutinę naudojimo datą
-          </button>
         </div>
       </div>
       <ul className="list-group list-group-flush">
@@ -39,7 +39,7 @@ export default function List({
                     className="availability"
                     style={{
                       backgroundColor:
-                        scooter.isBusy === 1 ? "#d30707" : "#3fca15",
+                        scooter.isBusy === 1 ? "#e53e3e" : "#48bb78",
                     }}
                   ></div>
                 </div>
@@ -65,7 +65,7 @@ export default function List({
                     Redaguoti
                   </button>
                   <button
-                    className="red"
+                    className="danger"
                     onClick={(_) => handleDeleteMessage(scooter.id)}
                   >
                     Trinti

@@ -86,12 +86,12 @@ export default function Edit({
                 <div>
                   Paskutinė naudojimo data:
                   <b>
-                    {
-                      scooters.filter(
-                        (scooter) =>
-                          scooter.registrationCode === editData.registrationCode
-                      )[0].lastUseTime
-                    }
+                    {scooters.filter(
+                      (scooter) =>
+                        scooter.registrationCode === editData.registrationCode
+                    )[0].lastUseTime === 0
+                      ? "Nenaudotas"
+                      : editData.registrationCode}
                   </b>
                 </div>
                 <div>

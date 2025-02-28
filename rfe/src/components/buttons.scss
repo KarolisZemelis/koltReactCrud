@@ -1,98 +1,95 @@
-$red: #b30606;
-$gray: #adbdff;
-$blue: #3185fc;
-$green: #36b30f;
-$yellow: #f18f01;
+$primary: #6366f1; // Indigo/Violet
+$secondary: #a5b4fc; // Light Indigo
+$success: #48bb78; // Softer Green
+$danger: #e53e3e; // Muted Red
+$warning: #f6ad55; // Warm Orange-Yellow
+$light-gray: #f3f4f6; // Light Gray
+$dark-gray: #4a5568; // Dark Gray
 
 button {
   appearance: none;
   backface-visibility: hidden;
-  background-color: $gray;
-  border-radius: 10px;
+  background-color: $secondary; // Default button color
+  border-radius: 8px; // Slightly less rounded
   border-style: none;
-  box-shadow: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow
   box-sizing: border-box;
-  color: #fff;
+  color: white;
   cursor: pointer;
   display: inline-block;
   font-family: Inter, -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
     sans-serif;
   font-size: 15px;
   font-weight: 500;
-  height: 50px;
+  height: 45px; // Slightly smaller buttons
   letter-spacing: normal;
   line-height: 1.5;
   outline: none;
   overflow: hidden;
-  padding: 14px 14px;
+  padding: 12px 20px; // Adjusted padding
   position: relative;
   text-align: center;
   text-decoration: none;
   transform: translate3d(0, 0, 0);
-  transition: all 0.3s;
+  transition: all 0.3s ease; // Smoother transition
   user-select: none;
   touch-action: manipulation;
   vertical-align: top;
   white-space: nowrap;
-  margin: 10px;
-  min-width: 100px;
+  margin: 8px; // Adjusted margin
+  min-width: 90px; // Adjusted min-width
 
   &:hover {
-    background-color: darken($gray, 5%);
-    box-shadow: rgba(0, 0, 0, 0.05) 0 5px 30px, rgba(0, 0, 0, 0.05) 0 1px 4px;
-    opacity: 1;
-    transform: translateY(0);
-    transition-duration: 0.35s;
-
-    &:after {
-      opacity: 0.5;
-    }
+    background-color: darken($secondary, 8%); // Darken on hover
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); // Slightly larger shadow
+    transform: translateY(-2px); // Slight lift on hover
   }
 
   &:active {
-    box-shadow: rgba(0, 0, 0, 0.1) 0 3px 6px 0, rgba(0, 0, 0, 0.1) 0 0 10px 0,
-      rgba(0, 0, 0, 0.1) 0 1px 4px -1px;
-    transform: translateY(2px);
-    transition-duration: 0.35s;
-
-    &:after {
-      opacity: 1;
-    }
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); // Smaller shadow on active
+    transform: translateY(1px); // Slight push on active
   }
-  &.red {
-    background-color: $red;
+
+  &.primary {
+    background-color: $primary;
 
     &:hover {
-      background-color: darken($red, 5%);
+      background-color: darken($primary, 8%);
     }
   }
-  &.blue {
-    background-color: $blue;
+
+  &.success {
+    background-color: $success;
 
     &:hover {
-      background-color: darken($blue, 5%);
+      background-color: darken($success, 8%);
     }
   }
-  &.green {
-    background-color: $green;
+
+  &.danger {
+    background-color: $danger;
 
     &:hover {
-      background-color: darken($green, 5%);
+      background-color: darken($danger, 8%);
     }
   }
-  &.yellow {
-    background-color: $yellow;
+
+  &.warning {
+    background-color: $warning;
 
     &:hover {
-      background-color: darken($yellow, 5%);
+      background-color: darken($warning, 8%);
     }
   }
+
   &:disabled {
-    background-color: gray;
+    background-color: #ddd; // Light gray for disabled
     cursor: default;
-    opacity: 0.5;
+    opacity: 0.7; // Slightly less opaque
     &:hover {
-      background-color: gray;
+      background-color: #ddd;
+      transform: none; // Disable hover effect
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Keep the base shadow
     }
   }
 }

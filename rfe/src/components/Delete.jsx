@@ -49,10 +49,12 @@ export default function Delete({ deleteData, setDeleteData, handleDelete }) {
               <p>
                 Paskutinį kartą naudotas prieš:{" "}
                 <b>
-                  {getDateDifference(
-                    new Date().toISOString().split("T")[0],
-                    deleteData.lastUseTime
-                  )}
+                  {deleteData.lastUseTime !== 0
+                    ? getDateDifference(
+                        new Date().toISOString().split("T")[0],
+                        deleteData.lastUseTime
+                      )
+                    : "Nenaudotas"}
                 </b>
               </p>
             </div>
@@ -63,7 +65,7 @@ export default function Delete({ deleteData, setDeleteData, handleDelete }) {
             </button>
             <button
               type="button"
-              className="red"
+              className="danger"
               onClick={(_) => handleDelete(deleteData.id)}
             >
               Ištrinti
