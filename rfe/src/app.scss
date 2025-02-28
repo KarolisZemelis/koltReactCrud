@@ -37,7 +37,7 @@ body {
     z-index: 100; /* Ensure it's above other content */
     .btn-close {
       top: -60px;
-      right: -95%;
+      right: -90%;
       box-shadow: none;
     }
     .logo-container {
@@ -293,16 +293,21 @@ h5 {
   align-items: center; // Center messages horizontally
 
   .alert {
-    width: 30%; // Adjust width as needed
-    margin-bottom: 5px; // Spacing between messages
+    width: 30%;
+    margin-bottom: 5px;
     text-align: center;
-    // opacity: 0; // Initially hidden
-    transform: translateY(-20px); // Start slightly above their final position
-    transition: opacity 0.3s ease, transform 0.3s ease; // Add transition
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &.show {
       opacity: 1; // Fade in
       transform: translateY(0); // Move to final position
+    }
+    .btn-close {
+      box-shadow: none;
     }
   }
 }
