@@ -15,191 +15,241 @@ $dark-gray: #4a5568; // Dark Gray
   text-decoration: none;
 }
 
-body {
-  background-color: $light-gray;
-  display: flex;
-  justify-content: center;
-}
-
 .App {
+  font-family: sans-serif;
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
-  // Use light gray for background
-  width: 1500px;
+  align-items: center;
+  background-color: $light-gray;
+  width: 100%;
+  .topBanner {
+    width: 100%;
+    height: 75px;
+    background: linear-gradient(
+      135deg,
+      #6366f1,
+      #a5b4fc
+    ); /* Add a background */
+    position: sticky; /* Make it stick */
+    top: 0; /* Stick to the top */
+    z-index: 100; /* Ensure it's above other content */
+    .btn-close {
+      top: -60px;
+      right: -95%;
+      border: none;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      height: 100%; /* Make the logo container fill the banner */
+    }
 
-  .heroContainer {
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    .logo-container img {
+      display: block;
+      max-height: 160px; /* Adjust logo size to fit banner height */
+      max-width: 80%; /* Ensure it's not too wide */
+    }
 
-    &::before {
+    .logo-container::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.6);
-    }
-
-    .statisticContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      position: relative;
-      z-index: 2;
-      gap: 10px;
-
-      .pieChart {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 350px;
-        height: 350px;
-        padding: 10px;
-        background-color: rgba(0, 0, 0, 0.05); // Very light gray
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        position: relative;
-        svg {
-          overflow: visible;
-        }
-        .legend {
-          margin-left: 10px;
-          position: absolute;
-          bottom: 10px;
-          right: 10px;
-
-          div {
-            display: inherit;
-            align-items: center;
-
-            .free,
-            .busy {
-              width: 18px;
-              height: 18px;
-              border: 1px solid $dark-gray; // Dark Gray border
-              margin-left: 5px;
-            }
-
-            .free {
-              background-color: $success; // Use success green
-            }
-
-            .busy {
-              background-color: $danger; // Use danger red
-            }
-          }
-        }
-      }
-
-      .statisticsTable {
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        width: 350px;
-        height: 350px;
-        background-color: rgba(0, 0, 0, 0.05); // Very light gray
-        font-size: 1.1em;
-        line-height: 1.6;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: left;
-
-        p {
-          margin: 10px 0;
-
-          b {
-            font-weight: bold;
-          }
-        }
-      }
-    }
-    .create-footer {
-      display: flex;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(74, 207, 235, 0.3), transparent);
+      filter: blur(50px);
+      z-index: 0;
     }
   }
 
-  .mainContainer {
+  .appBody {
+    width: 80%;
     display: flex;
-    gap: 30px;
-    padding: 20px;
-    .list {
-      padding: 20px;
-      border: 1px solid #eee;
-      background-color: white; // Use white for cards
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      .list-header {
+    flex-direction: column;
+    .heroContainer {
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: 100%;
+      background-position: center;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+
+      .statisticContainer {
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        h5 {
-          margin-bottom: 0;
+        justify-content: center;
+        padding: 40px;
+        position: relative;
+        z-index: 2;
+        gap: 10px;
+
+        .pieChart {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 350px;
+          height: 350px;
+          padding: 10px;
+          background-color: rgba(0, 0, 0, 0.05); // Very light gray
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          position: relative;
+          svg {
+            overflow: visible;
+          }
+          .legend {
+            margin-left: 10px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+
+            div {
+              display: inherit;
+              align-items: center;
+
+              .free,
+              .busy {
+                width: 18px;
+                height: 18px;
+                border: 1px solid $dark-gray; // Dark Gray border
+                margin-left: 5px;
+              }
+
+              .free {
+                background-color: $success; // Use success green
+              }
+
+              .busy {
+                background-color: $danger; // Use danger red
+              }
+            }
+          }
         }
-        .sortContainer {
-          display: inherit;
-          align-items: inherit;
+
+        .statisticsTable {
+          padding: 20px;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          width: 350px;
+          height: 350px;
+          background-color: rgba(0, 0, 0, 0.05); // Very light gray
+          font-size: 1.1em;
+          line-height: 1.6;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: left;
+
+          p {
+            margin: 10px 0;
+
+            b {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+      .create-footer {
+        display: flex;
+      }
+    }
+
+    .mainContainer {
+      display: flex;
+      gap: 30px;
+      padding: 20px;
+      .list {
+        padding: 20px;
+        border: 1px solid #eee;
+        background-color: white; // Use white for cards
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        .list-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          h5 {
+            margin-bottom: 0;
+          }
+          .sortContainer {
+            display: inherit;
+            align-items: inherit;
+            p {
+              margin-bottom: 0;
+            }
+          }
+        }
+        .list-group-item {
+          padding: 10px;
+          .registrationCode {
+            .codeContainer {
+              display: flex;
+              gap: 10px;
+              p {
+                margin-bottom: 0;
+              }
+            }
+          }
+          .scooterDetails {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            .isBusy {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              .availability {
+                width: 20px;
+                height: 20px;
+                border-radius: 50px;
+                border: 0.5px solid $dark-gray; // Dark Gray border
+              }
+            }
+            .lastUseTime {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            }
+            .totalRideKilometers {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            }
+            .btnContainer button {
+              margin: 3px;
+            }
+          }
+        }
+      }
+      .create {
+        max-height: 220px;
+        min-height: 220px;
+        .card-body {
+          text-align: center;
           p {
             margin-bottom: 0;
           }
         }
       }
-      .list-group-item {
-        padding: 10px;
-        .registrationCode {
-          display: flex;
-        }
-        .scooterDetails {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 10px;
-          .isBusy {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            .availability {
-              width: 20px;
-              height: 20px;
-              border-radius: 50px;
-              border: 0.5px solid $dark-gray; // Dark Gray border
-            }
-          }
-          .lastUseTime {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-          }
-          .totalRideKilometers {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-          }
-          .btnContainer button {
-            margin: 3px;
-          }
-        }
-      }
     }
-    .create {
-      max-height: 220px;
-    }
-  }
-
-  .modal {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -211,4 +261,20 @@ body {
 h5 {
   font-size: 22px;
   font-weight: 600;
+}
+
+.modal {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  b {
+    margin-left: 5px;
+  }
+  input {
+    margin-left: 5px;
+  }
+  .addDate {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }

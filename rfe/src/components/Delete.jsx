@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 export default function Delete({ deleteData, setDeleteData, handleDelete }) {
   const handleClose = () => {
     setDeleteData(null);

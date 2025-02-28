@@ -27,9 +27,17 @@ export default function List({
           scooters.map((scooter) => (
             <li className="list-group-item" key={scooter.id}>
               <div className="card-header registrationCode">
-                <p>Registracijos kodas: </p>
-                <div>
-                  <b>{scooter.registrationCode}</b>
+                <div className="codeContainer">
+                  <p>Registracijos kodas: </p>
+                  <div>
+                    <b>{scooter.registrationCode}</b>
+                  </div>
+                </div>
+                <div className="codeContainer">
+                  <p>ID: </p>
+                  <div>
+                    <b>{scooter.id}</b>
+                  </div>
                 </div>
               </div>
               <div className="scooterDetails">
@@ -59,7 +67,7 @@ export default function List({
                 </div>
                 <div className="btnContainer">
                   <button
-                    className="green"
+                    className="secondary"
                     onClick={(_) => handleEdit(scooter.id)}
                   >
                     Redaguoti

@@ -9,7 +9,7 @@ export default function Statistics({ statistics }) {
     }
 
     const freePercentage = (freeScooters / total) * 100;
-    console.log(freePercentage);
+
     const busyPercentage = (busyScooters / total) * 100;
 
     const freeAngle = Math.round((freePercentage / 100) * 360);

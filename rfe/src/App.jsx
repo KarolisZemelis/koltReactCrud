@@ -4,6 +4,7 @@ import List from "./components/List";
 import Edit from "./components/Edit";
 import Delete from "./components/Delete";
 import Statistics from "./components/Statistics";
+import TopBanner from "./components/TopBanner";
 import * as C from "./components/constants";
 import randRCode from "./components/randRCode";
 import heroBackground from "./components/images/hero_background.jpeg";
@@ -18,15 +19,15 @@ export default function App() {
   const [sortDirectionKm, setSortDirectionKm] = useState("asc");
   const [sortDirectionDate, setSortDirectionDate] = useState("asc");
   const [statistics, setStatistics] = useState(C.defaultStatistics);
+  const [topBanner, setTopBanner] = useState(1);
   const [message, setMessage] = useState([]);
-  let id = useRef(1);
+  let id = useRef(JSON.parse(localStorage.getItem("latestScooterId")));
 
   const handleRegistrationCode = () => {
     setRegistrationCode(randRCode());
   };
 
   const handleCreate = () => {
-    id.current = id.current + 1;
     setScooters((prevScooters) => [
       {
         ...C.defaultScooter,
@@ -35,10 +36,13 @@ export default function App() {
       },
       ...prevScooters,
     ]);
+    id.current = id.current + 1;
+    localStorage.setItem("latestScooterId", JSON.stringify(id.current));
     setRegistrationCode("xxxxxxxx");
   };
 
   const handleEdit = (id) => {
+    console.log("test");
     let scooterToEdit = scooters.find((scooter) => scooter.id === id);
     setEditData({
       ...scooterToEdit,
@@ -46,7 +50,7 @@ export default function App() {
       totalRideKilometers: 0.0,
     });
   };
-
+  console.log(editData);
   const handleUpdate = () => {
     setScooters((prevScooters) =>
       prevScooters.map((scooter) =>
@@ -133,6 +137,9 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (id === 0 || id === undefined) {
+      localStorage.setItem("latestScooterId", JSON.stringify(1));
+    }
     const storedScooters = JSON.parse(localStorage.getItem("scooters"));
     if (storedScooters) {
       const sortedScooters = [...storedScooters].sort(
@@ -167,28 +174,29 @@ export default function App() {
 
   return (
     <div className="App">
-      <div
-        className="heroContainer"
-        style={{ backgroundImage: `url(${heroBackground})` }}
-      >
-        {scooters.length > 0 && <Statistics statistics={statistics} />}
+      {topBanner !== 0 ? <TopBanner setTopBanner={setTopBanner} /> : null}
+      <div className="appBody">
+        <div
+          className="heroContainer"
+          style={{ backgroundImage: `url(${heroBackground})` }}
+        >
+          {scooters.length > 0 && <Statistics statistics={statistics} />}
+        </div>
+        <div className="mainContainer">
+          <Create
+            handleRegistrationCode={handleRegistrationCode}
+            registrationCode={registrationCode}
+            handleCreate={handleCreate}
+          />
+          <List
+            scooters={scooters}
+            handleEdit={handleEdit}
+            handleDeleteMessage={handleDeleteMessage}
+            handleDelete={handleDelete}
+            handleSort={handleSort}
+          />
+        </div>
       </div>
-
-      <div className="mainContainer">
-        <Create
-          handleRegistrationCode={handleRegistrationCode}
-          registrationCode={registrationCode}
-          handleCreate={handleCreate}
-        />
-        <List
-          scooters={scooters}
-          handleEdit={handleEdit}
-          handleDeleteMessage={handleDeleteMessage}
-          handleDelete={handleDelete}
-          handleSort={handleSort}
-        />
-      </div>
-
       {editData !== null ? (
         <Edit
           editData={editData}

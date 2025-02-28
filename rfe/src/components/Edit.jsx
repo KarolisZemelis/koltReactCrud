@@ -12,7 +12,11 @@ export default function Edit({
     e.preventDefault();
     handleUpdate();
   };
-
+  const getMinDateThisYear = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    return `${year}-01-01`; // Format: YYYY-MM-DD
+  };
   return (
     <div className="modal">
       <div className="modal-dialog modal-dialog-centered">
@@ -91,42 +95,46 @@ export default function Edit({
                         scooter.registrationCode === editData.registrationCode
                     )[0].lastUseTime === 0
                       ? "Nenaudotas"
-                      : editData.registrationCode}
+                      : editData.lastUseTime}
                   </b>
                 </div>
-                <div>
-                  {" "}
-                  <label className="form-label">Panaudojimo data: </label>
-                  <input
-                    type="date"
-                    name="lastUseTime"
-                    onChange={(e) =>
-                      setEditData((prevData) => ({
-                        ...prevData,
-                        lastUseTime: e.target.value,
-                      }))
-                    }
-                    required={editData.totalRideKilometers > 0}
-                    value={editData.lastUseTime}
-                  />
-                  <button
-                    className="green"
-                    type="button"
-                    onClick={() => {
-                      const newDate = new Date().toISOString().split("T")[0];
-                      setEditData((prevData) => ({
-                        ...prevData,
-                        lastUseTime: newDate,
-                      }));
-                    }}
-                  >
-                    Šiandienos data
-                  </button>
+                <div className="addDate">
+                  <div>
+                    <label className="form-label">Panaudojimo data: </label>
+                    <input
+                      type="date"
+                      name="lastUseTime"
+                      onChange={(e) =>
+                        setEditData((prevData) => ({
+                          ...prevData,
+                          lastUseTime: e.target.value,
+                        }))
+                      }
+                      required={editData.totalRideKilometers > 0}
+                      value={editData.lastUseTime}
+                      min={getMinDateThisYear()}
+                    />
+                  </div>
+                  <div className="dateBtnContainer">
+                    <button
+                      className="green"
+                      type="button"
+                      onClick={() => {
+                        const newDate = new Date().toISOString().split("T")[0];
+                        setEditData((prevData) => ({
+                          ...prevData,
+                          lastUseTime: newDate,
+                        }));
+                      }}
+                    >
+                      Šiandienos data
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="red" onClick={handleClose}>
+              <button type="button" className="danger" onClick={handleClose}>
                 Atšaukti
               </button>
               <button type="submit" className="green">
