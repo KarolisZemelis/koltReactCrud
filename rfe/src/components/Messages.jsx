@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 
 export default function Messages({ messages, setMessage }) {
+  const handleClose = (id) => {
+    setMessage((prevMessages) => prevMessages.filter((m) => m.id !== id));
+  };
   useEffect(() => {
     if (messages.length > 0) {
       const timeouts = messages.map((message) => {
@@ -22,6 +25,11 @@ export default function Messages({ messages, setMessage }) {
       {messages.map((message, i) => (
         <div key={i} className={`alert ${message.type}`} role="alert">
           {message.message}
+          <button
+            type="button"
+            className="btn-close"
+            onClick={(_) => handleClose(message.id)}
+          ></button>
         </div>
       ))}
     </div>
