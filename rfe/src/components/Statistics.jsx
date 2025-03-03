@@ -49,7 +49,7 @@ export default function Statistics({ statistics }) {
     };
 
     return (
-      <svg width="200" height="200" viewBox="-100 -100 200 200">
+      <svg width="200" height="200" viewBox="-110 -110 220 220">
         <defs>
           <linearGradient id="freeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop
@@ -92,7 +92,7 @@ export default function Statistics({ statistics }) {
         </g>
         {/* Free Percentage Label and Line */}
         <text
-          {...polarToCartesian(0, 15, 130, freeAngle / 2)}
+          {...polarToCartesian(10, -15, 130, freeAngle / 2)}
           textAnchor="middle"
           fontSize="16"
           fontFamily="Arial"
@@ -103,7 +103,7 @@ export default function Statistics({ statistics }) {
 
         {/* Busy Percentage Label and Line */}
         <text
-          {...polarToCartesian(0, -15, 130, freeAngle + busyAngle / 2)}
+          {...polarToCartesian(-10, 25, 130, freeAngle + busyAngle / 2)}
           textAnchor="middle"
           fontSize="16"
           fontFamily="Arial"

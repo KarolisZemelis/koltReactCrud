@@ -12,10 +12,10 @@ export default function List({
           <p>Rūšiuoti pagal:</p>
           <div className="sortBtnContainer">
             <button className="green" onClick={(_) => handleSort("km")}>
-              Kilometrai
+              Kilometrus
             </button>
             <button className="green" onClick={(_) => handleSort("data")}>
-              Paskutinę naudojimo datą
+              Datą
             </button>
           </div>
         </div>
@@ -54,9 +54,11 @@ export default function List({
                 <div className="lastUseTime">
                   <p>Paskutinį kartą naudotas:</p>
                   <div>
-                    {scooter.lastUseTime !== 0
-                      ? scooter.lastUseTime
-                      : "Nenaudotas"}
+                    <b>
+                      {scooter.lastUseTime !== 0
+                        ? scooter.lastUseTime
+                        : "Nenaudotas"}
+                    </b>
                   </div>
                 </div>
                 <div className="totalRideKilometers">

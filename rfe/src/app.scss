@@ -13,274 +13,342 @@ $dark-gray: #4a5568; // Dark Gray
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
+  font-family: sans-serif;
 }
+
 body {
-  overflow-x: hidden;
+  min-width: 430px;
+}
+@include media-breakpoint-down(md) {
+  body {
+    max-width: 430px;
+  }
 }
 .App {
-  font-family: sans-serif;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $light-gray;
   width: 100%;
+  padding-bottom: 50px;
+
   .topBanner {
+    height: 70px;
     width: 100%;
-    height: 75px;
-    background: linear-gradient(
-      135deg,
-      #6366f1,
-      #a5b4fc
-    ); /* Add a background */
-    position: sticky; /* Make it stick */
-    top: 0; /* Stick to the top */
-    z-index: 100; /* Ensure it's above other content */
-    .btn-close {
-      top: -60px;
-      right: -90%;
-      box-shadow: none;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, #6366f1, #a5b4fc);
     .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      height: 100%; /* Make the logo container fill the banner */
+      img {
+        width: 65px;
+        height: 65px;
+      }
     }
-
-    .logo-container img {
-      display: block;
-      max-height: 160px; /* Adjust logo size to fit banner height */
-      max-width: 80%; /* Ensure it's not too wide */
+    .btn-close {
+      box-shadow: none;
+      border: none;
+      background-color: transparent;
+      width: 45px;
+      height: 45px;
+      min-width: 0;
+      padding: 0;
     }
-
-    .logo-container::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(74, 207, 235, 0.3), transparent);
-      filter: blur(50px);
-      z-index: 0;
+    .btn-close:hover {
+      box-shadow: none;
+      border: none;
+      background-color: transparent;
     }
   }
   .appBody {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    .heroContainer {
-      height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-size: 100%;
-      background-position: center;
-      position: relative;
+    width: 70%;
 
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.6);
+    @include media-breakpoint-down(md) {
+      width: 85%;
+      padding-bottom: 20px;
+    }
+    .heroContainer {
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      // Default background position (for smaller screens)
+      background-position: center;
+
+      // Adjust background position for medium screens and above
+      @include media-breakpoint-up(md) {
+        background-position: 20% 50%; // Example values
+      }
+
+      // Further adjust for larger screens
+      @include media-breakpoint-up(lg) {
+        background-position: 30% 50%; // Example values
       }
 
       .statisticContainer {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-        position: relative;
-        z-index: 2;
-        gap: 10px;
+        flex-wrap: wrap; // Allow items to wrap on smaller screens
+        justify-content: space-around;
+        padding: 20px;
 
+        .statisticsTable,
         .pieChart {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 350px;
-          height: 350px;
-          padding: 10px;
-          background-color: rgba(0, 0, 0, 0.05); // Very light gray
-          border: 1px solid #ddd;
+          width: 100%; // Full width on small screens
+          margin-bottom: 20px;
+          box-sizing: border-box;
+          background-color: rgba(224, 221, 221, 0.8);
           border-radius: 10px;
-          position: relative;
-          svg {
-            overflow: visible;
-          }
-          .legend {
-            margin-left: 10px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-
-            div {
-              display: inherit;
-              align-items: center;
-
-              .free,
-              .busy {
-                width: 18px;
-                height: 18px;
-                border: 1px solid $dark-gray; // Dark Gray border
-                margin-left: 5px;
-              }
-
-              .free {
-                background-color: $success; // Use success green
-              }
-
-              .busy {
-                background-color: $danger; // Use danger red
-              }
-            }
-          }
         }
 
         .statisticsTable {
           padding: 20px;
-          border: 1px solid #ddd;
-          border-radius: 10px;
-          width: 350px;
-          height: 350px;
-          background-color: rgba(0, 0, 0, 0.05); // Very light gray
-          font-size: 1.1em;
-          line-height: 1.6;
+          background-color: rgba(224, 221, 221, 0.8);
+          p {
+            margin-bottom: 10px;
+            font-size: 16px;
+          }
+        }
+
+        .pieChart {
           display: flex;
           flex-direction: column;
+          align-items: center;
           justify-content: center;
-          text-align: left;
+          svg {
+            overflow: visible;
+            .free {
+              background-color: $success; // Use success green
+            }
 
-          p {
-            margin: 10px 0;
+            .busy {
+              background-color: $danger; // Use danger red
+            }
+          }
+          .legend {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin-top: 10px;
+            padding-bottom: 5px;
+            background-color: rgba(224, 221, 221, 0.8);
+            border-radius: 4px;
 
-            b {
-              font-weight: bold;
+            div {
+              display: flex;
+              align-items: center;
+              margin: 0 15px;
+              font-size: 14px;
+
+              div {
+                width: 15px;
+                height: 15px;
+                margin-left: 5px;
+              }
+            }
+
+            .busy {
+              background-color: red; // Or your busy color
+            }
+
+            .free {
+              background-color: green; // Or your free color
             }
           }
         }
-      }
-      .create-footer {
-        display: flex;
-      }
-    }
 
-    .mainContainer {
-      display: flex;
-      gap: 30px;
-      padding: 20px;
-      .list {
-        padding: 20px;
-        border: 1px solid #eee;
-        background-color: white; // Use white for cards
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        .list-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          h5 {
+        // Medium screens and above
+        @include media-breakpoint-up(md) {
+          flex-wrap: nowrap; // Prevent wrapping
+          .statisticsTable,
+          .pieChart {
+            width: 48%; // Adjust as needed
             margin-bottom: 0;
           }
-          .sortContainer {
-            display: inherit;
-            align-items: inherit;
+          .statisticsTable {
             p {
-              margin-bottom: 0;
+              font-size: 18px;
             }
           }
-        }
-        .list-group-item {
-          padding: 10px;
-          .registrationCode {
-            .codeContainer {
-              display: flex;
-              gap: 10px;
-              p {
-                margin-bottom: 0;
+          .pieChart {
+            .legend {
+              div {
+                font-size: 16px;
               }
             }
           }
-          .scooterDetails {
+        }
+      }
+    }
+    .mainContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 16px;
+      gap: 16px;
+      width: 100%;
+      overflow: visible;
+      @include media-breakpoint-up(md) {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
+      .create {
+        min-width: 370px;
+        min-height: 200px;
+        .card-header {
+          display: flex;
+          justify-content: center;
+          h5 {
+            font-weight: 700;
+          }
+        }
+        .card-body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          p {
+            margin: 0;
+          }
+        }
+        .create-footer {
+          display: flex;
+          justify-content: center;
+          button {
+            min-width: 68px;
+          }
+        }
+      }
+      .list {
+        .list-header {
+          h5 {
+            font-weight: 700;
+            text-align: center;
+          }
+          .sortContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            p {
+              margin: 0;
+            }
+            .sortBtnContainer {
+              display: flex;
+              button {
+                min-width: 114px;
+                box-sizing: border-box;
+              }
+            }
+          }
+          @include media-breakpoint-up(md) {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            .isBusy {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: column;
-              .availability {
-                width: 20px;
-                height: 20px;
-                border-radius: 50px;
-                border: 0.5px solid $dark-gray; // Dark Gray border
-              }
+            h5 {
+              margin: 0;
             }
-            .lastUseTime {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: column;
-            }
-            .totalRideKilometers {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-direction: column;
-            }
-            .btnContainer button {
-              margin: 3px;
+            .sortContainer {
+              flex-direction: row;
             }
           }
         }
-      }
-      .create {
-        max-height: 220px;
-        min-height: 220px;
-        flex-wrap: nowrap;
-        .card-body {
-          text-align: center;
-          p {
-            margin-bottom: 0;
+        .list-group-flush {
+          .list-group-item {
+            .registrationCode {
+              gap: 5px;
+              .codeContainer {
+                p {
+                  margin: 0;
+                  margin-bottom: 5px;
+                }
+                display: flex;
+                div {
+                  margin-left: 3px;
+                }
+              }
+            }
+            .scooterDetails {
+              div {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin: 5px;
+                p {
+                  margin: 0;
+                }
+              }
+              .btnContainer {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-top: 0;
+                button {
+                  min-width: 110px;
+                }
+              }
+              .availability {
+                width: 15px;
+                height: 15px;
+                border-radius: 10px;
+              }
+            }
+            @include media-breakpoint-up(md) {
+              .registrationCode {
+                display: flex;
+                justify-content: space-around;
+              }
+              .scooterDetails {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                .btnContainer {
+                  width: fit-content;
+                  flex-direction: row;
+                  gap: 3px;
+                  button {
+                    margin: 0;
+                  }
+                }
+                div {
+                  flex-direction: column;
+                }
+              }
+            }
           }
+        }
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+        @include media-breakpoint-up(md) {
+          min-width: 590px;
         }
       }
     }
   }
-}
-
-.card-header,
-.card-footer {
-  background-color: rgba(0, 0, 0, 0.05); // Very light gray
-}
-
-h5 {
-  font-size: 22px;
-  font-weight: 600;
 }
 
 .modal {
   display: block;
   background-color: rgba(0, 0, 0, 0.5);
-  b {
-    margin-left: 5px;
-  }
-  input {
-    margin-left: 5px;
-  }
-  .addDate {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  justify-content: flex;
+
+  .modal-dialog-centered {
+    width: 90%;
+    .mb-3 {
+      .form-label {
+        margin-right: 3px;
+      }
+      .lastUseDate-text {
+        display: flex;
+        gap: 3px;
+      }
+    }
   }
 }
-
 .messageContainer {
   position: fixed; // Fix the container to the top of the viewport
   top: 80px;
@@ -293,7 +361,7 @@ h5 {
   align-items: center; // Center messages horizontally
 
   .alert {
-    width: 30%;
+    width: 100%;
     margin-bottom: 5px;
     text-align: center;
     transform: translateY(-20px);
@@ -309,66 +377,5 @@ h5 {
     .btn-close {
       box-shadow: none;
     }
-  }
-}
-
-@media (max-width: 1200px) {
-  body {
-    font-size: 14px;
-  }
-
-  .topBanner {
-    height: 60px;
-  }
-
-  .topBanner .logo-container img {
-    max-height: 50px;
-  }
-
-  /* Example: Adjust statistic container padding*/
-  .statisticContainer {
-    padding: 20px;
-  }
-
-  .mainContainer {
-    flex-direction: column;
-    .create {
-      min-height: auto;
-    }
-    .list {
-      width: 100%;
-    }
-  }
-}
-
-@media (max-width: 830px) {
-  body {
-    max-width: 830px;
-  }
-  .App .appBody .mainContainer .list .list-group-item .scooterDetails {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .App .appBody .mainContainer .list .list-group-item .scooterDetails .isBusy,
-  .App
-    .appBody
-    .mainContainer
-    .list
-    .list-group-item
-    .scooterDetails
-    .lastUseTime,
-  .App
-    .appBody
-    .mainContainer
-    .list
-    .list-group-item
-    .scooterDetails
-    .totalRideKilometers {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 5px;
-    width: 100%;
   }
 }

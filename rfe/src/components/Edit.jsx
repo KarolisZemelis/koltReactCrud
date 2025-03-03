@@ -4,6 +4,7 @@ export default function Edit({
   scooters,
   handleUpdate,
 }) {
+  console.log(editData);
   const handleClose = () => {
     setEditData(null);
   };
@@ -45,31 +46,30 @@ export default function Edit({
                   Paspirtuko užimtumas:
                   <b> {editData.isBusy === 1 ? "Užimtas" : "Laisvas"}</b>
                 </div>
-                Rezervuoti:
-                <input
-                  type="checkbox"
-                  name="isBusy"
-                  checked={editData.isBusy}
-                  onChange={(_) =>
-                    setEditData((prevData) => ({
-                      ...prevData,
-                      isBusy: prevData.isBusy === 1 ? 0 : 1,
-                    }))
-                  }
-                />
-                <div className="mb-3"></div>
+                <label>
+                  Rezervuoti:
+                  <input
+                    type="checkbox"
+                    name="isBusy"
+                    checked={editData.isBusy}
+                    onChange={(_) =>
+                      setEditData((prevData) => ({
+                        ...prevData,
+                        isBusy: prevData.isBusy === 1 ? 0 : 1,
+                      }))
+                    }
+                  />
+                </label>
               </div>
               <div className="mb-3">
-                <label className="form-label">
-                  Nuvažiuoti kilometrai:
-                  <b>
-                    {scooters.filter(
-                      (scooter) =>
-                        scooter.registrationCode === editData.registrationCode
-                    )[0].totalRideKilometers + editData.totalRideKilometers}
-                    km
-                  </b>
-                </label>
+                <label className="form-label">Nuvažiuoti kilometrai:</label>
+                <b>
+                  {scooters.filter(
+                    (scooter) =>
+                      scooter.registrationCode === editData.registrationCode
+                  )[0].totalRideKilometers + editData.totalRideKilometers}
+                  km
+                </b>
               </div>
               <div className="mb-3">
                 <label className="form-label">Pridėti prie ridos:</label>
@@ -88,16 +88,23 @@ export default function Edit({
                 <span> km</span>
               </div>
               <div className="mb-3">
-                <div>
-                  Paskutinė naudojimo data:
-                  <b>
-                    {scooters.filter(
-                      (scooter) =>
-                        scooter.registrationCode === editData.registrationCode
-                    )[0].lastUseTime === 0
-                      ? "Nenaudotas"
-                      : editData.lastUseTime}
-                  </b>
+                <div className="lastUseDate-text">
+                  <p>Paskutinė naudojimo data:</p>
+                  <div>
+                    {" "}
+                    <b>
+                      {scooters.filter(
+                        (scooter) =>
+                          scooter.registrationCode === editData.registrationCode
+                      )[0].lastUseTime === ""
+                        ? "Nenaudotas"
+                        : scooters.filter(
+                            (scooter) =>
+                              scooter.registrationCode ===
+                              editData.registrationCode
+                          )[0].lastUseTime}
+                    </b>
+                  </div>
                 </div>
                 <div className="addDate">
                   <div>

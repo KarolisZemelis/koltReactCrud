@@ -1,4 +1,5 @@
 import logo from "./images/logo.png";
+import "../app.scss";
 
 export default function TopBanner({ setTopBanner }) {
   const handleClose = () => {
