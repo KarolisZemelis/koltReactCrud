@@ -16,6 +16,7 @@ export default function App() {
   const isInitialized = useRef(false);
   const [scooters, setScooters] = useState([]);
   const [registrationCode, setRegistrationCode] = useState("xxxxxxxx");
+  const [newScooter, setNewScooter] = useState([C.defaultScooter]);
   const [editData, setEditData] = useState(null);
   const [deleteData, setDeleteData] = useState(null);
   const [sortDirectionKm, setSortDirectionKm] = useState("asc");
@@ -30,11 +31,14 @@ export default function App() {
   };
 
   const handleCreate = () => {
+    const currentId = id.current;
     setScooters((prevScooters) => [
       {
         ...C.defaultScooter,
-        id: id.current,
+        id: currentId,
         registrationCode: registrationCode,
+        lastUseTime: newScooter.lastUseTime,
+        totalRideKilometers: newScooter.totalRideKilometers,
       },
       ...prevScooters,
     ]);
@@ -46,10 +50,10 @@ export default function App() {
         id: uuidv4(),
       },
     ]);
-    console.log(messages);
     id.current = id.current + 1;
     localStorage.setItem("latestScooterId", JSON.stringify(id.current));
     setRegistrationCode("xxxxxxxx");
+    setNewScooter(C.defaultScooter);
   };
 
   const handleEdit = (id) => {
@@ -216,6 +220,9 @@ export default function App() {
             handleRegistrationCode={handleRegistrationCode}
             registrationCode={registrationCode}
             handleCreate={handleCreate}
+            id={id}
+            newScooter={newScooter}
+            setNewScooter={setNewScooter}
           />
           <List
             scooters={scooters}

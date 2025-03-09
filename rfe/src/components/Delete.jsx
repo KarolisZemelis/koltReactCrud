@@ -4,8 +4,9 @@ export default function Delete({ deleteData, setDeleteData, handleDelete }) {
   };
   function getDateDifference(dateString1, dateString2) {
     const date1 = new Date(dateString1);
+    console.log(date1);
     const date2 = new Date(dateString2);
-
+    console.log(date2);
     if (isNaN(date1.getTime()) || isNaN(date2.getTime())) {
       return "Nenaudotas";
     }
@@ -18,7 +19,7 @@ export default function Delete({ deleteData, setDeleteData, handleDelete }) {
       return <>{timeDifferenceDays} dieną</>;
     } else if (timeDifferenceDays >= 2 && timeDifferenceDays <= 10) {
       return <>{timeDifferenceDays} dienas</>;
-    } else if (timeDifferenceDays >= 11) {
+    } else if (timeDifferenceDays >= 11 || timeDifferenceDays === 0) {
       return <>{timeDifferenceDays} dienų</>;
     }
   }
@@ -45,9 +46,9 @@ export default function Delete({ deleteData, setDeleteData, handleDelete }) {
                 Rida: <b>{deleteData.totalRideKilometers}</b> km
               </p>
               <p>
-                Paskutinį kartą naudotas prieš:{" "}
+                Paskutinį kartą naudotas prieš:
                 <b>
-                  {deleteData.lastUseTime !== 0
+                  {deleteData.lastUseTime !== "0"
                     ? getDateDifference(
                         new Date().toISOString().split("T")[0],
                         deleteData.lastUseTime

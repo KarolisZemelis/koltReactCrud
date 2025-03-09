@@ -207,8 +207,35 @@ body {
         }
         .card-body {
           display: flex;
-          justify-content: center;
-          align-items: center;
+          flex-direction: column;
+          .registration {
+            display: flex;
+            flex-direction: column;
+          }
+          .totalRide {
+            input {
+              width: 30%;
+            }
+          }
+          .lastUse {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 0 !important;
+            .lastUseDate-text {
+              display: flex;
+              div {
+                margin-bottom: 1rem;
+              }
+            }
+            .dateBtnContainer {
+              display: flex;
+              justify-content: center;
+              button {
+                width: 100%;
+              }
+            }
+          }
           p {
             margin: 0;
           }
@@ -217,7 +244,7 @@ body {
           display: flex;
           justify-content: center;
           button {
-            min-width: 68px;
+            width: 100%;
           }
         }
       }

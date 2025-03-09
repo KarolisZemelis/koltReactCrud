@@ -121,6 +121,16 @@ export default function Edit({
                       required={editData.totalRideKilometers > 0}
                       value={editData.lastUseTime}
                       min={getMinDateThisYear()}
+                      max={(() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const month = String(now.getMonth() + 1).padStart(
+                          2,
+                          "0"
+                        );
+                        const day = String(now.getDate()).padStart(2, "0");
+                        return `${year}-${month}-${day}`;
+                      })()}
                     />
                   </div>
                   <div className="dateBtnContainer">
