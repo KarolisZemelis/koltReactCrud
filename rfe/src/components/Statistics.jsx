@@ -119,17 +119,17 @@ export default function Statistics({ statistics }) {
     <div className="statisticContainer">
       <div className="statisticsTable">
         <p>
-          Iš viso paspirtukų: <b>{statistics.totalScooters}</b>
+          Iš <b>viso</b> paspirtukų: <b>{statistics.totalScooters}</b>
         </p>
         <p>
-          Iš viso laisvų paspirtukų: <b>{statistics.freeScooters}</b>
+          Iš <b>viso laisvų</b> paspirtukų: <b>{statistics.freeScooters}</b>
         </p>
         <p>
-          Iš viso užimtų paspirtukų: <b>{statistics.busyScooters}</b>
+          Iš <b>viso užimtų</b> paspirtukų: <b>{statistics.busyScooters}</b>
         </p>
         <p>
-          Iš viso nuvažiuota kilometrų: <b>{statistics.totalRideKilometers}</b>{" "}
-          km
+          Iš <b>viso nuvažiuota</b> kilometrų:{" "}
+          <b>{statistics.totalRideKilometers}</b> km
         </p>
       </div>
       <div className="pieChart">

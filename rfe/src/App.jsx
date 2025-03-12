@@ -38,7 +38,7 @@ export default function App() {
         id: currentId,
         registrationCode: registrationCode,
         lastUseTime: newScooter.lastUseTime,
-        totalRideKilometers: newScooter.totalRideKilometers,
+        totalRideKilometers: Number(newScooter.totalRideKilometers),
       },
       ...prevScooters,
     ]);

@@ -64,7 +64,7 @@ export default function List({
                 <div className="totalRideKilometers">
                   <p>Kilometražas:</p>
                   <div>
-                    <b>{scooter.totalRideKilometers} km</b>
+                    <b>{parseFloat(Number(scooter.totalRideKilometers))} km</b>
                   </div>
                 </div>
                 <div className="btnContainer">

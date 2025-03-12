@@ -365,6 +365,9 @@ body {
 
   .modal-dialog-centered {
     width: 90%;
+    input {
+      width: 40%;
+    }
     .mb-3 {
       .form-label {
         margin-right: 3px;

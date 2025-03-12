@@ -35,7 +35,7 @@ export default function Create({
         <div className="mb-3">
           <label className="form-label">Nuvažiuoti kilometrai:</label>
           <b>
-            {newScooter.totalRideKilometers}
+            {newScooter[0].totalRideKilometers}
             km
           </b>
         </div>
@@ -45,7 +45,7 @@ export default function Create({
             type="number"
             name="totalRideKilometers"
             min={0}
-            value={newScooter.totalRideKilometers}
+            value={newScooter[0].totalRideKilometers}
             onChange={(e) => {
               setNewScooter((prevData) => ({
                 ...prevData,
